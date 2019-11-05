@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-###################################################
+# ---------------------------------------------------------------------- #
 # Model definitions
 
 class User(db.Model):
@@ -43,6 +43,8 @@ class User(db.Model):
     ### Define instance methods here ###
     
 
+# ---------------------------------------------------------------------- #
+
 class Event(db.Model):
     """Create data for an event."""
 
@@ -57,12 +59,12 @@ class Event(db.Model):
     title = db.Column(db.String(100),
                       nullable=False,
                       unique=True)
-    start = db.Column(db.DateTime,
-                      nullable=False,
-                      unique=False)
-    end = db.Column(db.DateTime,
-                    nullable=False,
-                    unique=False)
+    start_date_time = db.Column(db.DateTime,
+                                nullable=False,
+                                unique=False)
+    end_date_time = db.Column(db.DateTime,
+                                nullable=False,
+                                unique=False)
     location = db.Column(db.String(200),
                          nullable=False,
                          unique=False)
@@ -82,6 +84,8 @@ class Event(db.Model):
 
     ### Define instance methods here ###
 
+
+# ---------------------------------------------------------------------- #
 
 class Invitation(db.Model):
     """Create data for a distinct invitation."""
@@ -118,6 +122,11 @@ class Invitation(db.Model):
                                  rsvp = {self.rsvp} >"""
 
 
+    ### Define instance methods here ###
+
+
+# ---------------------------------------------------------------------- #
+
 class Image(db.Model):
     """Create data for a distinct image."""
 
@@ -151,6 +160,11 @@ class Image(db.Model):
                             user_id = {self.user_id},
                             event_id = {self.event_id} >"""
 
+
+    ### Define instance methods here ###
+
+
+# ---------------------------------------------------------------------- #
 
 class Resource(db.Model):
     """Create data for a distinct image."""
@@ -193,14 +207,17 @@ class Resource(db.Model):
                                name = {self.name} >"""
 
 
-####################################################
+    ### Define instance methods here ###
+
+
+# ---------------------------------------------------------------------- #
 # Helper functions
 
 def connect_to_db(app):
     """Connect the database to the Flask app."""
 
     # Configurations to use the database.
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgres:///{db_name}"  # replace {db_name} with actual DB name
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgres:///events"
     app.config["SQLALCHEMY_ECHO"] = False
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
