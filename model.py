@@ -28,11 +28,29 @@ class User(db.Model):
                       nullable=False)
     
     age = db.Column(db.Integer,
-                    nullable=False)
+                    nullable=False)  # refactor to use DOB to automatically update value
     
     phone = db.Column(db.String(20),
                       nullable=False,
                       unique=True)
+
+
+    # ONE user to MANY events
+    events = db.relationship("Event",
+                             backref=db.backref("user", order_by=user_id))
+
+    # ONE user to MANY invites
+    invites = db.relationship("Invitation", 
+                           backref=db.backref("user", order_by=user_id))
+
+    # ONE user to MANY images
+    images = db.relationship("Image", 
+                           backref=db.backref("user", order_by=user_id))
+
+    # ONE user to MANY resources
+    resources = db.relationship("Resource", 
+                           backref=db.backref("user", order_by=user_id))
+
 
 
     def __repr__(self):
@@ -64,9 +82,11 @@ class Event_Type(db.Model):
     isActive = db.Column(db.Boolean,
                          nullable=False)
 
-    # Relationship to event 
-    event = db.relationship("Event",
-                            backref=db.backref("event_types", order_by=code))
+    # ONE event type to MANY events 
+    events = db.relationship("Event",
+                            backref=db.backref("event_type", order_by=code))
+
+
 
     def __repr__(self):
         """Human readable representation of event category object when printed."""
@@ -97,27 +117,33 @@ class Event(db.Model):
     title = db.Column(db.String(50),
                       nullable=False)
     
-    start_date_time = db.Column(db.DateTime,
+    start_on = db.Column(db.DateTime,
                                 nullable=False)
     
-    end_date_time = db.Column(db.DateTime,
+    end_on = db.Column(db.DateTime,
                               nullable=False)
     
-    created_by = db.Column(db.Integer,
-                           db.ForeignKey('users.user_id'))
-    
-    created_date_time = db.Column(db.DateTime,
+    created_on = db.Column(db.DateTime,
                                   nullable=False)
     
-    modified_by = db.Column(db.Integer,
-                            db.ForeignKey('users.user_id'))
-    
-    modified_date_time = db.Column(db.DateTime,
-                                   nullable=False)
 
     ########### Need to revisit ######################
     # location = db.Column(db.String(200),
     #                      nullable=False)
+
+
+    # ONE event to MANY invites
+    invites = db.relationship("Invitation",
+                            backref=db.backref("event", order_by=event_id))
+
+    # ONE event to MANY images
+    images = db.relationship("Image",
+                            backref=db.backref("event", order_by=event_id))
+
+    # ONE event to MANY resources
+    resources = db.relationship("Resource",
+                            backref=db.backref("event", order_by=event_id))
+
 
 
     def __repr__(self):
@@ -137,7 +163,7 @@ class Event(db.Model):
 class Invitation(db.Model):
     """Create data for a distinct invitation."""
 
-    __tablename__ = "invitations"
+    __tablename__ = "invites"
 
     invite_id = db.Column(db.Integer,
                           autoincrement=True,
@@ -150,28 +176,11 @@ class Invitation(db.Model):
                          db.ForeignKey('events.event_id'))
     
     rsvp = db.Column(db.String(10),
-                     nullable=False)
+                     nullable=False)    # branch this out to a separate entity
     
-    created_by = db.Column(db.Integer,
-                           db.ForeignKey('users.user_id'))
+    created_on = db.Column(db.DateTime,
+                           nullable=False)
     
-    created_date_time = db.Column(db.DateTime,
-                                  nullable=False)
-    
-    modified_by = db.Column(db.Integer,
-                            db.ForeignKey('users.user_id'))
-    
-    modified_date_time = db.Column(db.DateTime,
-                                   nullable=False)
-
-
-    # Define relationship to user
-    user = db.relationship("User", 
-                           backref=db.backref("invitations", order_by=invite_id))
-
-    # Define relationship to event
-    event = db.relationship("Event",
-                            backref=db.backref("invitations", order_by=invite_id))
 
 
     def __repr__(self):
@@ -207,27 +216,9 @@ class Image(db.Model):
                     nullable=False,
                     unique=True)
     
-    created_by = db.Column(db.Integer,
-                           db.ForeignKey('users.user_id'))
+    created_on = db.Column(db.DateTime,
+                           nullable=False)
     
-    created_date_time = db.Column(db.DateTime,
-                                  nullable=False)
-    
-    modified_by = db.Column(db.Integer,
-                            db.ForeignKey('users.user_id'))
-    
-    modified_date_time = db.Column(db.DateTime,
-                                   nullable=False)
-
-
-    # Relationship to user
-    user = db.relationship("User", 
-                           backref=db.backref("images", order_by=img_id))
-
-    # Relationship to event
-    event = db.relationship("Event",
-                            backref=db.backref("images", order_by=img_id))
-
 
     def __repr__(self):
         """Human readable representation of image object when printed."""
@@ -261,9 +252,9 @@ class Resource_Type(db.Model):
                          nullable=False)
 
 
-    # Relationship to resource
-    resource = db.relationship("Resource",
-                                backref=db.backref("resource_types", order_by=code))
+    # ONE resource type to MANY resources
+    resources = db.relationship("Resource",
+                                backref=db.backref("resource_type", order_by=code))
 
 
     def __repr__(self):
@@ -300,16 +291,6 @@ class Resource(db.Model):
     
     cost = db.Column(db.Integer,
                      nullable=True)
-
-
-
-    # Relationship to user
-    user = db.relationship("User", 
-                           backref=db.backref("resources", order_by=res_id))
-
-    # Relationship to event
-    event = db.relationship("Event",
-                            backref=db.backref("resources", order_by=res_id))
 
 
     def __repr__(self):
