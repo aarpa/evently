@@ -303,11 +303,11 @@ class Resource(db.Model):
 
 
 
-    # Define relationship to user
+    # Relationship to user
     user = db.relationship("User", 
                            backref=db.backref("resources", order_by=res_id))
 
-    # Define relationship to event
+    # Relationship to event
     event = db.relationship("Event",
                             backref=db.backref("resources", order_by=res_id))
 
