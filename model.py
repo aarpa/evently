@@ -159,7 +159,34 @@ class Event(db.Model):
 
 
 # ---------------------------------------------------------------------- #
+class RSVP_Type(db.Model):
+    """Create data for a user."""
 
+    __tablename__ = "rsvp_types"
+
+    code = db.Column(db.String(5),
+                     primary_key=True)
+    
+    name = db.Column(db.String(20),
+                     nullable=False,
+                     unique=True)
+    
+    isActive = db.Column(db.Boolean,
+                         nullable=False)
+
+
+
+    def __repr__(self):
+        """Human readable representation of event category object when printed."""
+
+        return f"""< Event Type: code = {self.code}, 
+                           name = {self.name} >"""
+
+
+    ### Define instance methods here ###
+    
+
+# ---------------------------------------------------------------------- #
 class Invitation(db.Model):
     """Create data for a distinct invitation."""
 
@@ -182,6 +209,11 @@ class Invitation(db.Model):
                            nullable=False)
     
 
+    # ONE rsvp type to MANY rsvps
+    rsvp_type = db.relationship("RSVP_Type",
+                            backref=db.backref("rsvps", order_by=invite_id))
+
+
 
     def __repr__(self):
         """Human readable representation of invitation object when printed."""
@@ -189,7 +221,7 @@ class Invitation(db.Model):
         return f"""< Invitation: invite_id = {self.invite_id},
                                  user_id = {self.user_id},
                                  event_id = {self.event_id},
-                                 rsvp = {self.rsvp} >"""
+                                 rsvp = {self.rsvp_status} >"""
 
 
     ### Define instance methods here ###
