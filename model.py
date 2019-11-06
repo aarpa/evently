@@ -27,13 +27,13 @@ class User(db.Model):
     password = db.Column(db.String(50),
                       nullable=False)
     
-    age = db.Column(db.Integer,
-                    nullable=False)  # refactor to use DOB to automatically update value
-    
     phone = db.Column(db.String(20),
                       nullable=False,
                       unique=True)
 
+    age = db.Column(db.Integer,
+                    nullable=False)  # refactor to use DOB to automatically update value
+    
 
     # ONE user to MANY events
     events = db.relationship("Event",
@@ -91,7 +91,7 @@ class Event_Type(db.Model):
     def __repr__(self):
         """Human readable representation of event category object when printed."""
 
-        return f"""< Event Category: code = {self.code}, 
+        return f"""< Event Type: code = {self.code}, 
                            name = {self.name} >"""
 
 
