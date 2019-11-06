@@ -16,15 +16,20 @@ class User(db.Model):
     user_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
+    
     name = db.Column(db.String(100),
                      nullable=False)
+    
     email = db.Column(db.String(100),
                       nullable=False,
                       unique=True)
+    
     password = db.Column(db.String(50),
                       nullable=False)
+    
     age = db.Column(db.Integer,
                     nullable=False)
+    
     phone = db.Column(db.String(20),
                       nullable=False,
                       unique=True)
@@ -47,17 +52,21 @@ class Event_Type(db.Model):
     __tablename__ = "event_types"
 
     code = db.Column(db.String(5),
-                        primary_key=True)
+                     primary_key=True)
+    
     name = db.Column(db.String(20),
-                     nullable=False)
+                     nullable=False,
+                     unique=True)
+    
     description = db.Column(db.Text,
                             nullable=False)
+    
     isActive = db.Column(db.Boolean,
                          nullable=False)
 
-    # Define relationship to event 
+    # Relationship to event 
     event = db.relationship("Event",
-                                     backref=db.backref("event_types", order_by=code))
+                            backref=db.backref("event_types", order_by=code))
 
     def __repr__(self):
         """Human readable representation of event category object when printed."""
@@ -78,22 +87,31 @@ class Event(db.Model):
     event_id = db.Column(db.Integer,
                          autoincrement=True,
                          primary_key=True)
+    
     host = db.Column(db.Integer,
                      db.ForeignKey('users.user_id'))
+    
     category = db.Column(db.String(5),
-                        db.ForeignKey('event_types.code'))
+                         db.ForeignKey('event_types.code'))
+    
     title = db.Column(db.String(50),
                       nullable=False)
+    
     start_date_time = db.Column(db.DateTime,
                                 nullable=False)
+    
     end_date_time = db.Column(db.DateTime,
                               nullable=False)
+    
     created_by = db.Column(db.Integer,
-                     db.ForeignKey('users.user_id'))
+                           db.ForeignKey('users.user_id'))
+    
     created_date_time = db.Column(db.DateTime,
                                   nullable=False)
+    
     modified_by = db.Column(db.Integer,
-                     db.ForeignKey('users.user_id'))
+                            db.ForeignKey('users.user_id'))
+    
     modified_date_time = db.Column(db.DateTime,
                                    nullable=False)
 
@@ -124,19 +142,25 @@ class Invitation(db.Model):
     invite_id = db.Column(db.Integer,
                           autoincrement=True,
                           primary_key=True)
+    
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.user_id'))
+    
     event_id = db.Column(db.Integer,
                          db.ForeignKey('events.event_id'))
+    
     rsvp = db.Column(db.String(10),
-                     nullable=False,
-                     unique=False)
+                     nullable=False)
+    
     created_by = db.Column(db.Integer,
                            db.ForeignKey('users.user_id'))
+    
     created_date_time = db.Column(db.DateTime,
                                   nullable=False)
+    
     modified_by = db.Column(db.Integer,
                             db.ForeignKey('users.user_id'))
+    
     modified_date_time = db.Column(db.DateTime,
                                    nullable=False)
 
@@ -172,28 +196,35 @@ class Image(db.Model):
     img_id = db.Column(db.Integer,
                        autoincrement=True,
                        primary_key=True)
+   
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.user_id'))
+    
     event_id = db.Column(db.Integer,
                          db.ForeignKey('events.event_id'))
+    
     url = db.Column(db.String(200),
                     nullable=False,
                     unique=True)
+    
     created_by = db.Column(db.Integer,
                            db.ForeignKey('users.user_id'))
+    
     created_date_time = db.Column(db.DateTime,
                                   nullable=False)
+    
     modified_by = db.Column(db.Integer,
                             db.ForeignKey('users.user_id'))
+    
     modified_date_time = db.Column(db.DateTime,
                                    nullable=False)
 
 
-    # Define relationship to user
+    # Relationship to user
     user = db.relationship("User", 
                            backref=db.backref("images", order_by=img_id))
 
-    # Define relationship to event
+    # Relationship to event
     event = db.relationship("Event",
                             backref=db.backref("images", order_by=img_id))
 
@@ -209,24 +240,30 @@ class Image(db.Model):
     ### Define instance methods here ###
 
 
+# ---------------------------------------------------------------------- #
+
 class Resource_Type(db.Model):
     """Create data for a user."""
 
-    __tablename__ = "resource_type"
+    __tablename__ = "resource_types"
 
     code = db.Column(db.String(5),
                         primary_key=True)
+    
     name = db.Column(db.String(20),
-                     nullable=False)
+                     nullable=False,
+                     unique=True)
+    
     description = db.Column(db.Text,
                             nullable=False)
+    
     isActive = db.Column(db.Boolean,
                          nullable=False)
 
 
-    # Define relationship to resource
+    # Relationship to resource
     resource = db.relationship("Resource",
-                                     backref=db.backref("resource_types", order_by=code))
+                                backref=db.backref("resource_types", order_by=code))
 
 
     def __repr__(self):
@@ -248,16 +285,19 @@ class Resource(db.Model):
     res_id = db.Column(db.Integer,
                        autoincrement=True,
                        primary_key=True)
+    
     user_id = db.Column(db.Integer,
                         db.ForeignKey('users.user_id'))
+    
     event_id = db.Column(db.Integer,
                          db.ForeignKey('events.event_id'))
+    
     name = db.Column(db.String(50),
-                    nullable=False,
-                    unique=False)
+                    nullable=False)
+    
     category = db.Column(db.String(25),
-                         nullable=False,
-                         unique=False)
+                         nullable=False)
+    
     cost = db.Column(db.Integer,
                      nullable=True)
 
