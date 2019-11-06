@@ -17,17 +17,14 @@ class User(db.Model):
                         autoincrement=True,
                         primary_key=True)
     name = db.Column(db.String(100),
-                     nullable=False,
-                     unique=True)
+                     nullable=False)
     email = db.Column(db.String(100),
                       nullable=False,
                       unique=True)
     password = db.Column(db.String(50),
-                      nullable=False,
-                      unique=True)
+                      nullable=False)
     age = db.Column(db.Integer,
-                    nullable=False,
-                    unique=True)
+                    nullable=False)
     phone = db.Column(db.String(20),
                       nullable=False,
                       unique=True)
@@ -44,7 +41,35 @@ class User(db.Model):
     
 
 # ---------------------------------------------------------------------- #
+class Event_Type(db.Model):
+    """Create data for a user."""
 
+    __tablename__ = "event_types"
+
+    code = db.Column(db.String(5),
+                        primary_key=True)
+    name = db.Column(db.String(20),
+                     nullable=False)
+    description = db.Column(db.Text,
+                            nullable=False)
+    isActive = db.Column(db.Boolean,
+                         nullable=False)
+
+    # Define relationship to event 
+    event = db.relationship("Event",
+                                     backref=db.backref("event_types", order_by=code))
+
+    def __repr__(self):
+        """Human readable representation of event category object when printed."""
+
+        return f"""< Event Category: code = {self.code}, 
+                           name = {self.name} >"""
+
+
+    ### Define instance methods here ###
+    
+
+# ---------------------------------------------------------------------- #
 class Event(db.Model):
     """Create data for an event."""
 
@@ -53,24 +78,28 @@ class Event(db.Model):
     event_id = db.Column(db.Integer,
                          autoincrement=True,
                          primary_key=True)
-    host = db.Column(db.String(100),
-                     nullable=False,
-                     unique=False)
-    title = db.Column(db.String(100),
-                      nullable=False,
-                      unique=True)
+    host = db.Column(db.Integer,
+                     db.ForeignKey('users.user_id'))
+    category = db.Column(db.String(5),
+                        db.ForeignKey('event_types.code'))
+    title = db.Column(db.String(50),
+                      nullable=False)
     start_date_time = db.Column(db.DateTime,
-                                nullable=False,
-                                unique=False)
+                                nullable=False)
     end_date_time = db.Column(db.DateTime,
-                                nullable=False,
-                                unique=False)
-    location = db.Column(db.String(200),
-                         nullable=False,
-                         unique=False)
-    category = db.Column(db.String(50),
-                         nullable=False,
-                         unique=False)
+                              nullable=False)
+    created_by = db.Column(db.Integer,
+                     db.ForeignKey('users.user_id'))
+    created_date_time = db.Column(db.DateTime,
+                                  nullable=False)
+    modified_by = db.Column(db.Integer,
+                     db.ForeignKey('users.user_id'))
+    modified_date_time = db.Column(db.DateTime,
+                                   nullable=False)
+
+    ########### Need to revisit ######################
+    # location = db.Column(db.String(200),
+    #                      nullable=False)
 
 
     def __repr__(self):
@@ -102,6 +131,14 @@ class Invitation(db.Model):
     rsvp = db.Column(db.String(10),
                      nullable=False,
                      unique=False)
+    created_by = db.Column(db.Integer,
+                           db.ForeignKey('users.user_id'))
+    created_date_time = db.Column(db.DateTime,
+                                  nullable=False)
+    modified_by = db.Column(db.Integer,
+                            db.ForeignKey('users.user_id'))
+    modified_date_time = db.Column(db.DateTime,
+                                   nullable=False)
 
 
     # Define relationship to user
@@ -142,6 +179,14 @@ class Image(db.Model):
     url = db.Column(db.String(200),
                     nullable=False,
                     unique=True)
+    created_by = db.Column(db.Integer,
+                           db.ForeignKey('users.user_id'))
+    created_date_time = db.Column(db.DateTime,
+                                  nullable=False)
+    modified_by = db.Column(db.Integer,
+                            db.ForeignKey('users.user_id'))
+    modified_date_time = db.Column(db.DateTime,
+                                   nullable=False)
 
 
     # Define relationship to user
@@ -164,8 +209,37 @@ class Image(db.Model):
     ### Define instance methods here ###
 
 
-# ---------------------------------------------------------------------- #
+class Resource_Type(db.Model):
+    """Create data for a user."""
 
+    __tablename__ = "resource_type"
+
+    code = db.Column(db.String(5),
+                        primary_key=True)
+    name = db.Column(db.String(20),
+                     nullable=False)
+    description = db.Column(db.Text,
+                            nullable=False)
+    isActive = db.Column(db.Boolean,
+                         nullable=False)
+
+
+    # Define relationship to resource
+    resource = db.relationship("Resource",
+                                     backref=db.backref("resource_types", order_by=code))
+
+
+    def __repr__(self):
+        """Human readable representation of event category object when printed."""
+
+        return f"""< Resource Category: code = {self.code}, 
+                           name = {self.name} >"""
+
+
+    ### Define instance methods here ###
+    
+
+# ---------------------------------------------------------------------- #
 class Resource(db.Model):
     """Create data for a distinct image."""
 
