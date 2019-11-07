@@ -26,7 +26,7 @@ def login():
     return render_template("login.html")
 
 
-@app.route('signup')
+@app.route('/signup')
 def signup():
     """Display sign up page."""
 
@@ -35,7 +35,7 @@ def signup():
 ###################################################
 # Helper functions
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     app.debug = True
 
     connect_to_db(app)

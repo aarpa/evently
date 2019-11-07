@@ -8,19 +8,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Link secondary css files here -->
-
-
-    <!-- <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.js"></script> -->
-
-
-    {% block HEAD %}
-        ADDITIONAL META DATA GOES HERE
-    {% endblock %}
 </head>
 <body>
-    {% block BODY %}
-        BODY CONTENT GOES HERE
-    {% endblock %}
+    <main>
+        <div id="root"></div>
+    </main>
+
 
     <!-- React script tags -->
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
@@ -28,6 +21,7 @@
 
     <!-- Babel script tag -->
     <script crossorigin src="https://cdnjs.com/libraries/babel-standalone"></script>
+    <!-- <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.js"></script> -->
     
     <!-- jQuery script tag -->
     <script crossorigin src="https://code.jquery.com/jquery-3.4.1.js"></script>
