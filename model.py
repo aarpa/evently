@@ -25,14 +25,14 @@ class User(db.Model):
                       unique=True)
     
     password = db.Column(db.String(50),
-                      nullable=False)
+                      nullable=True)
     
     phone = db.Column(db.String(20),
-                      nullable=False,
+                      nullable=True,
                       unique=True)
 
-    age = db.Column(db.Integer,
-                    nullable=False)  # refactor to use DOB to automatically update value
+    dob = db.Column(db.DateTime,
+                    nullable=True) 
     
 
     # ONE user to MANY events
