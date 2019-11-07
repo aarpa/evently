@@ -12,9 +12,11 @@ app.jinja_env.undefined = StrictUndefined
 
 
 ###################################################
-# Route and view function definitions
+@app.route('/')
+def index():
+    """Render landing page."""
 
-
+    return render_template("index.html")
 
 
 
