@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Event Planner</title>
-    <!-- Link some css files here -->
-</head>
-<body>
-    <div id="root"></div>
+{% extends 'base.html' %}
 
-    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    
-    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+{% block TITLE %}Welcome!{% endblock %}
 
-    <!-- <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.js"></script> -->
-
-    <!-- <script crossorigin src="https://cdnjs.com/libraries/babel-standalone"></script> -->
-
-</body>
-</html>
+{% block BODY %}
+  <header>
+    <h1>Welcome to Event Planner!</h1>
+  </header>
+  <nav>
+    <button><a href="/login">Log In</a></button>
+    <button><a href="/signup">Create an Account</a></button>
+  </nav>
+{% endblock %}
