@@ -16,7 +16,7 @@ app.jinja_env.undefined = StrictUndefined
 def index():
     """Display landing page."""
 
-    return render_template("index.html")
+    return render_template("Index/index.html")
 
 
 @app.route('/login')
