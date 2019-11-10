@@ -1,4 +1,4 @@
-from jinja2 import StrictUndefined
+# from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, request, flash, redirect, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
@@ -8,15 +8,15 @@ from model import db, connect_to_db  # import the other classes defined in model
 app = Flask(__name__)
 app.secret_key = 'something&super&duper&secretive'
 
-app.jinja_env.undefined = StrictUndefined
+# app.jinja_env.undefined = StrictUndefined
 
 
 ###################################################
 @app.route('/')
-def index():
+def home():
     """Display landing page."""
 
-    return render_template("Index/index.html")
+    return render_template("index.html")
 
 
 @app.route('/login')
