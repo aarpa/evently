@@ -47,12 +47,8 @@ class Credentials extends React.Component {
 		);
 	}
 
-	changeTabToLogin = () => {
-		this.setState({tab: 'login'})
-	}
-
-	changeTabToSignup = () => {
-		this.setState({tab: 'signup'})
+	changeTab = (tab) => {
+		this.setState({ tab: tab});
 	}
 
 	render() {
@@ -68,8 +64,8 @@ class Credentials extends React.Component {
 		return (
 			<div className="credentials">
 				<div>
-					<button onClick={this.changeTabToLogin}>Log In</button>
-					<button onClick={this.changeTabToSignup}>Sign Up</button>
+					<button onClick={() => this.changeTab('login')}>Log In</button>
+					<button onClick={() => this.changeTab('signup')}>Sign Up</button>
 					{toRender}
 				</div>
 			</div>
