@@ -1,8 +1,6 @@
 /* SINGLE PAGE APP
 
-This page sets up a single "App" component that will render other functional components from "/static/js/componets.jsx" depending on the user interactions. 
-
-ReactRouterDOM is intended to help 
+This page sets up a single "App" component that will render other functional components from "/static/js/components.jsx" depending on the user interactions. 
 
 */
 
@@ -35,7 +33,7 @@ class App extends React.Component{
     render() {
         return (
             <ReactRouterDOM.BrowserRouter>
-                <Navbar>
+                <nav>
                   <ReactRouterDOM.NavLink
                     to="/login"
                     activeClassName="navlink-active"
@@ -50,7 +48,7 @@ class App extends React.Component{
                   >
                     Sign Up
                   </ReactRouterDOM.NavLink>
-                </Navbar>
+                </nav>
                 <div>
                     <ReactRouterDOM.Route
                         exact

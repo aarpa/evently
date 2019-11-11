@@ -12,25 +12,30 @@ app.secret_key = 'something&super&duper&secretive'
 
 
 ###################################################
-@app.route('/')
-def home():
-    """Display landing page."""
+# @app.route('/')
+# def home():
+#     """Display landing page."""
 
-    return render_template("index.html")
-
-
-@app.route('/login')
-def login():
-    """Display login page."""
-
-    return render_template("login.html")
+#     return render_template("index.html")
 
 
-@app.route('/signup')
-def signup():
-    """Display sign up page."""
+# @app.route('/login')
+# def login():
+#     """Display login page."""
 
-    render_template("signup.html")
+#     return render_template("login.html")
+
+
+# @app.route('/signup')
+# def signup():
+#     """Display sign up page."""
+
+    # render_template("signup.html")
+
+@app.route('/users/{user_id}/events')
+def getUserEvents():
+    # Look in db for user events and return JSON data to client that is asking for the data
+    
 
 ###################################################
 # Helper functions
