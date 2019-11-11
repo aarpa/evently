@@ -1,6 +1,8 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
+import NavBar from '../NavBar/NavBar';
+import Credentials from '../Credentials/Credentials';
 
 // function App() {
 //   return (
@@ -27,8 +29,9 @@ import './App.css';
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <NavBar />
+        <Credentials />
       </div>
     );
   }
