@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import NavBar from '../NavBar/NavBar';
 import Credentials from '../Credentials/Credentials';
+import Profile from '../Profile/Profile';
 
 // function App() {
 //   return (
@@ -27,11 +28,47 @@ import Credentials from '../Credentials/Credentials';
 
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = { page: 'credentials'};
+  }
+
+  renderCredentials = () => {
+    return (
+      <div>
+        <Credentials />
+        <button onClick={() => this.changePage('profile')}>Go to Profile Page</button>
+      </div>
+    );
+  }
+
+  renderProfile = () => {
+    return (
+      <div>
+        <Profile />
+        <button onClick={() => this.changePage('credentials')}>Log Out</button>
+      </div>
+    );
+  }
+
+  changePage = (page) => {
+    this.setState({ page: page});
+  }
+
   render() {
+    let page = this.state.page;
+    let toRender;
+
+    if (page === 'credentials') {
+      toRender = this.renderCredentials();
+    } else {
+      toRender = this.renderProfile();
+    }
+
     return (
       <div className="app">
         <NavBar />
-        <Credentials />
+        {toRender}
       </div>
     );
   }

@@ -1,8 +1,9 @@
 .app {
   text-align: center;
   height: 100%;
-  background-image: url('./background-img-blossom.jpg');
+  background-image: url('./main-background-image.jpg');
   background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   font-family: 'Work Sans', sans-serif;
   font-weight: 500;
