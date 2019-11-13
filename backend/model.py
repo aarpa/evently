@@ -19,9 +19,6 @@ def connect_to_db(app):
     db.app = app
     db.init_app(app)
 
-    # Create all tables
-    db.create_all()
-
 
 # ---------------------------------------------------------------------- #
 # Model definitions
@@ -97,7 +94,7 @@ class Event_Type(db.Model):
     description = db.Column(db.Text,
                             nullable=False)
     
-    isActive = db.Column(db.Boolean,
+    is_active = db.Column(db.Boolean,
                          nullable=False)
 
     # ONE event type to MANY events 
@@ -189,7 +186,7 @@ class RSVP_Type(db.Model):
                      nullable=False,
                      unique=True)
     
-    isActive = db.Column(db.Boolean,
+    is_active = db.Column(db.Boolean,
                          nullable=False)
 
 
@@ -298,7 +295,7 @@ class Resource_Type(db.Model):
     description = db.Column(db.Text,
                             nullable=False)
     
-    isActive = db.Column(db.Boolean,
+    is_active = db.Column(db.Boolean,
                          nullable=False)
 
 
