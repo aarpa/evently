@@ -10,10 +10,12 @@ class Profile extends React.Component {
   renderBio = () => {
     return (
       <div className="bio">
-        <img src="profile_pic.jpg"/>
-        <h1>User's name</h1>
-        <p>User's email</p>
-        <p>User's phone number</p>
+        <img src="profile_pic.jpg" alt="user"/>
+        <div className="userInfo">
+          <h1>User's name</h1>
+          <p>User's email</p>
+          <p>User's phone number</p>
+        </div>
       </div>
     );
   }
@@ -42,8 +44,8 @@ class Profile extends React.Component {
       <div className="attendingEvents">
         <h3>Events You're Attending</h3>
         <p>Name of Event: Christmas Potluck</p>
-        <p>Start Date and Time: 12/25/19, 6:30 pm</p>
-        <p>End Date and Time: 12/25/19, 11:30 pm</p>
+        <p>Start: 12/25/19, 6:30 pm</p>
+        <p>End: 12/25/19, 11:30 pm</p>
         <p>Guests Attending</p>
         <ol>
           <li>User</li>

@@ -1,0 +1,17 @@
+.bio {
+  display: flex;
+}
+
+.userInfo {
+  text-align: left;
+  margin-left: 1.5rem;
+}
+
+.profile button {
+  margin: 1.5rem 1rem;
+}
+
+.hostingEvents,
+.attendingEvents {
+  line-height: 1.5rem;
+}
