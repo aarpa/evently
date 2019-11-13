@@ -2,8 +2,7 @@
 
 from flask import Flask, render_template, request, flash, redirect, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
-
-from model import db, connect_to_db  # import the other classes defined in model.py
+from model import db, connect_to_db  
 
 app = Flask(__name__)
 app.secret_key = 'something&super&duper&secretive'
@@ -32,8 +31,8 @@ app.secret_key = 'something&super&duper&secretive'
 
     # render_template("signup.html")
 
-@app.route('/users/{user_id}/events')
-def getUserEvents():
+# @app.route('/users/{user_id}/events')
+# def getUserEvents():
     # Look in db for user events and return JSON data to client that is asking for the data
     
 
@@ -41,10 +40,10 @@ def getUserEvents():
 # Helper functions
 
 if __name__ == "__main__":
-    app.debug = True
+  app.debug = True
 
-    connect_to_db(app)
+  connect_to_db(app)
 
-    DebugToolbarExtension(app)
+  DebugToolbarExtension(app)
 
-    app.run(host="0.0.0.0")
+  app.run(host="0.0.0.0")

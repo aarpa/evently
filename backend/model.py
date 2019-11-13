@@ -1,8 +1,26 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
+
 # Instantiate a SQLAlchemy obj to create db.Model classess.
 db = SQLAlchemy()
+# app = Flask(__name__)
+# app.secret_key = 'something&super&duper&secretive'
+
+
+def connect_to_db(app):
+    """Connect the database to the Flask app."""
+
+    # Configurations to use the database.
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///events"
+    app.config["SQLALCHEMY_ECHO"] = False
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    db.app = app
+    db.init_app(app)
+
+    # Create all tables
+    db.create_all()
 
 
 # ---------------------------------------------------------------------- #
@@ -340,20 +358,8 @@ class Resource(db.Model):
 # ---------------------------------------------------------------------- #
 # Helper functions
 
-def connect_to_db(app):
-    """Connect the database to the Flask app."""
-
-    # Configurations to use the database.
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgres:///events"
-    app.config["SQLALCHEMY_ECHO"] = False
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-    db.app = app
-    db.init_app(app)
-
-
 if __name__ == "__main__":
-
     from server import app
     connect_to_db(app)
+
     print("Connected to DB")
