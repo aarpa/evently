@@ -1,0 +1,3 @@
+yes|Attending!|True
+no|Can't make it!|True
+maybe|Not sure yet|True

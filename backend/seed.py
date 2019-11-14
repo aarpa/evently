@@ -57,7 +57,7 @@ def create_event_types(filename):
         # Add user to session
         db.session.add(event_type)
 
-    # Commit all event types to DB
+    # Commit all event type instances to DB
     db.session.commit()
 
 
@@ -69,13 +69,30 @@ def load_events(user_filename):
 
 
 
-def create_rsvp_types():
+# -------------------------------------------------------- #
+def create_rsvp_types(filename):
   """Seed specific types of rsvps in DB."""
 
   # Write code here
 
+    print("RSVP Types")
+
+    for i, row in enumerate(open(filename)):
+        row = rstrip()
+        code, name, is_active = row.split("|")
+
+        rsvp_type = RSVP_Type(code=code,
+                              name=name,
+                              is_active=is_active)
+
+        # Add rsvp type to session
+        db.session.add(rsvp_type)
+
+    # Commit all rsvp type instances to DB
+    db.session.commit()
 
 
+# -------------------------------------------------------- #
 def load_invites(invite_filename):
   """Load invite from invite_data.csv into DB."""
 
@@ -83,6 +100,7 @@ def load_invites(invite_filename):
 
 
 
+# -------------------------------------------------------- #
 def create_resource_types():
   """Seed specific types of resources in DB."""
 
@@ -90,13 +108,14 @@ def create_resource_types():
 
 
 
+# -------------------------------------------------------- #
 def load_resources(resource_filename):
   """Load resources from resource_data.csv into DB."""
 
-  # Write code here to loop over resource data and populate DB.
 
 
 
+# -------------------------------------------------------- #
 def load_images(image_filename):
   """Load images from image_data.csv into DB."""
 
