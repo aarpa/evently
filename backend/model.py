@@ -47,7 +47,11 @@ class User(db.Model):
                       unique=True)
 
     dob = db.Column(db.DateTime,
-                    nullable=True) 
+                    nullable=True)
+
+    is_registered = db.Column(db.Boolean,
+                              nullable=False,
+                              default=False)
     
 
     # ONE user to MANY events

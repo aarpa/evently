@@ -10,7 +10,32 @@ from server import app
 def load_users(user_filename):
   """Load users from user_data.csv into DB."""
 
-  # Write code here to loop over user data and populate DB.
+    print("Users")
+
+    for i, row in enumerate(open(user_filename)):
+        row = row.rstrip()
+        user_id, name, email, password, phone, dob = row.split("|")
+
+        if email:
+          is_registered = True
+        else:
+            is_registered = False
+
+        # Instantiate user from model definition
+        user = User(name=name, 
+                    email=email, 
+                    password=password, 
+                    phone=phone, 
+                    dob=dob,
+                    is_registered=is_registered)
+
+
+        # Add user to session
+        db.session.add(user)
+
+
+    # Commit all added users to DB
+    db.session.commit()
 
 
 
