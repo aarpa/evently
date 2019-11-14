@@ -1,7 +1,7 @@
-1|Kevon Joplin|Celebration|Friendsgiving Dinner|11/23/2019 5:30 pm|11/23/2019 10:30 pm|10/15/2019
-2|Chaddie Maldin|Trip|Napa Trip|7/9/2019 10 am|7/10/2019 9 pm|6/13/2019
-3|Kevon Joplin|Game Night|Board Games & Boba|6/22/2019 4:30 pm|6/22/2019 9:30 pm|6/10/2019
-4|Carlee Philot|Celebration|Friendsgiving Dinner|11/28/2019 6:30 pm|11/28/2019 11 pm|10/4/2019
-5|Janek Van den Hof|Celebration|Graduation Party|6/30/2019 12 pm|6/30/2019 8 pm|3/24/2019
-6|Dulcea Sallarie|Game Night|Board Games & Boba|2/18/2019 6 pm|2/18/2019 10 pm|2/10/2019
-7|Jonell Poyner|Trip|Half Dome Hike|4/19/2019 4 pm|4/26/2019 2 pm|1/24/2019
+1|Kevon Joplin|Celebration|Friendsgiving Dinner|11/23/2019 17:30|11/23/2019 22:30|10/15/2019
+2|Chaddie Maldin|Trip|Napa Trip|7/9/2019 10:00|7/10/2019 21:00|6/13/2019
+3|Kevon Joplin|Game Night|Board Games & Boba|6/22/2019 16:30|6/22/2019 21:30|6/10/2019
+4|Carlee Philot|Celebration|Friendsgiving Dinner|11/28/2019 18:30|11/28/2019 23:00|10/4/2019
+5|Janek Van den Hof|Celebration|Graduation Party|6/30/2019 12:00|6/30/2019 20:00|3/24/2019
+6|Dulcea Sallarie|Game Night|Board Games & Boba|2/18/2019 18:00|2/18/2019 22:00|2/10/2019
+7|Jonell Poyner|Trip|Half Dome Hike|4/19/2019 16:00|4/26/2019 14:00|1/24/2019

@@ -1,6 +1,6 @@
 """Utility file to seed data in DB using data from /seed_data/ directory."""
 
-import datetime
+from datetime import datetime
 import sqlalchemy
 
 from model import db, User, Event_Type, Event, RSVP_Type, Invitation, Image, Resource_Type, Resource, connect_to_db
@@ -8,7 +8,7 @@ from server import app
 
 # -------------------------------------------------------- #
 def load_users(user_filename):
-  """Load users from user_data.csv into DB."""
+    """Load users from user_data.csv into DB."""
 
     print("Users")
 
@@ -40,7 +40,7 @@ def load_users(user_filename):
 
 # -------------------------------------------------------- #
 def create_event_types(event_type_filename):
-  """Seed specific types of events in DB."""
+    """Seed specific types of events in DB."""
 
     print("Event Types")
 
@@ -48,13 +48,13 @@ def create_event_types(event_type_filename):
         row = row.rstrip()
         code, name, description, is_active = row.split("|")
 
-        # Instantiate event types
+        # Instantiate event type
         event_type = Event_Type(code=code,
                                 name=name,
                                 description=description,
                                 is_active=is_active)
 
-        # Add user to session
+        # Add event type to session
         db.session.add(event_type)
 
     # Commit all event type instances to DB
@@ -63,17 +63,38 @@ def create_event_types(event_type_filename):
 
 # -------------------------------------------------------- #
 def load_events(event_filename):
-  """Load events from event_data.csv into DB."""
+    """Load events from event_data.csv into DB."""
 
-  # Write code here to loop over event data and populate DB.
+    print("Events")
 
+    for i, row in enumerate(open(event_filename)):
+        row = row.rstrip()
+        event_id, host, category, title, start_str, end_str, created_str = row.split("|")
+
+        start_on = datetime.strptime(start_str, "%m/%d/%Y %H:%M")
+        end_on = datetime.strptime(end_str, "%m/%d/%Y %H:%M")
+        created_on = datetime.strptime(created_str, "%m/%d/%Y %H:%M")
+
+
+        # Instantiate event
+        event = Event(event_id=event_id,
+                      host=host,
+                      category=category,
+                      title=title,
+                      start_on=start_on,
+                      end_on=end_on,
+                      created_on=created_on)
+        
+        # Add event to session
+        db.session.add(event)
+
+    # Commit all event instances to DB
+    db.session.commit()
 
 
 # -------------------------------------------------------- #
 def create_rsvp_types(rsvp_type_filename):
-  """Seed specific types of rsvps in DB."""
-
-  # Write code here
+    """Seed specific types of rsvps in DB."""
 
     print("RSVP Types")
 
@@ -81,6 +102,7 @@ def create_rsvp_types(rsvp_type_filename):
         row = row.rstrip()
         code, name, is_active = row.split("|")
 
+        # Instantiate rsvp type
         rsvp_type = RSVP_Type(code=code,
                               name=name,
                               is_active=is_active)
@@ -145,11 +167,20 @@ if __name__ == "__main__":
     # store data in corresponding variables
     user_filename = "seed_data/users.txt"
     event_type_filename = "seed_data/event_types.txt"
+    event_filename = 
     rsvp_type_filename = "seed_data/rsvp_types.txt"
+    invite_filename = 
     resource_type_filenanme = "seed_data/resource_types.txt"
+    resource_filename = 
+    image_filename = 
 
     # Call the defined functions and pass in variable names
     load_users(user_filename)
     create_event_types(event_type_filename)
     create_rsvp_types(rsvp_type_filename)
     create_resource_types(resource_type_filenanme)
+
+    load_events(event_filename)
+    load_invites(invite_filename)
+    load_resources(resource_filename)
+    load_images(image_filename)

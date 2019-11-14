@@ -103,15 +103,14 @@ class Event_Type(db.Model):
 
     # ONE event type to MANY events 
     events = db.relationship("Event",
-                            backref=db.backref("event_type", order_by=code))
+                            backref=db.backref("event_type", order_by=name))
 
 
 
     def __repr__(self):
         """Human readable representation of event category object when printed."""
 
-        return f"""< Event Type: code = {self.code}, 
-                           name = {self.name} >"""
+        return f"""< Event Type: name = {self.name} >"""
 
 
     ### Define instance methods here ###
@@ -128,10 +127,10 @@ class Event(db.Model):
                          primary_key=True)
     
     host = db.Column(db.Integer,
-                     db.ForeignKey('users.user_id'))
+                     db.ForeignKey('users.user_name'))
     
     category = db.Column(db.String(5),
-                         db.ForeignKey('event_types.code'))
+                         db.ForeignKey('event_types.name'))
     
     title = db.Column(db.String(50),
                       nullable=False)
