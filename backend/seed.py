@@ -21,7 +21,7 @@ def load_users(user_filename):
         else:
             is_registered = False
 
-        # Instantiate user from model definition
+        # Instantiate user
         user = User(name=name, 
                     email=email, 
                     password=password, 
@@ -34,18 +34,34 @@ def load_users(user_filename):
         db.session.add(user)
 
 
-    # Commit all added users to DB
+    # Commit all users to DB
     db.session.commit()
 
 
-
-def create_event_types():
+# -------------------------------------------------------- #
+def create_event_types(filename):
   """Seed specific types of events in DB."""
 
-  # Write code here 
+    print("Event Types")
+
+    for i, row in enumerate(open(filename)):
+        row = row.rstrip()
+        code, name, description, is_active = row.split("|")
+
+        # Instantiate event types
+        event_type = Event_Type(code=code,
+                                name=name,
+                                description=description,
+                                is_active=is_active)
+
+        # Add user to session
+        db.session.add(event_type)
+
+    # Commit all event types to DB
+    db.session.commit()
 
 
-
+# -------------------------------------------------------- #
 def load_events(user_filename):
   """Load events from event_data.csv into DB."""
 
