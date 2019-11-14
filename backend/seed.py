@@ -39,12 +39,12 @@ def load_users(user_filename):
 
 
 # -------------------------------------------------------- #
-def create_event_types(filename):
+def create_event_types(event_type_filename):
   """Seed specific types of events in DB."""
 
     print("Event Types")
 
-    for i, row in enumerate(open(filename)):
+    for i, row in enumerate(open(event_type_filename)):
         row = row.rstrip()
         code, name, description, is_active = row.split("|")
 
@@ -62,7 +62,7 @@ def create_event_types(filename):
 
 
 # -------------------------------------------------------- #
-def load_events(user_filename):
+def load_events(event_filename):
   """Load events from event_data.csv into DB."""
 
   # Write code here to loop over event data and populate DB.
@@ -70,15 +70,15 @@ def load_events(user_filename):
 
 
 # -------------------------------------------------------- #
-def create_rsvp_types(filename):
+def create_rsvp_types(rsvp_type_filename):
   """Seed specific types of rsvps in DB."""
 
   # Write code here
 
     print("RSVP Types")
 
-    for i, row in enumerate(open(filename)):
-        row = rstrip()
+    for i, row in enumerate(open(rsvp_type_filename)):
+        row = row.rstrip()
         code, name, is_active = row.split("|")
 
         rsvp_type = RSVP_Type(code=code,
@@ -101,11 +101,25 @@ def load_invites(invite_filename):
 
 
 # -------------------------------------------------------- #
-def create_resource_types():
+def create_resource_types(resource_type_filenanme):
   """Seed specific types of resources in DB."""
 
-  # Write code here 
+    print("Resource Types")
 
+    for i, row in enumerate(open(resource_type_filenanme)):
+        row = row.rstrip()
+        code, name, description, is_active = row.split("|")
+
+        resource_type = Resource_Type(code=code,
+                                      name=name,
+                                      description=description,
+                                      is_active=is_active)
+
+        # Add resource type to session
+        db.session.add(resource_type)
+
+    # Commit all resource type instances to DB
+    db.session.commit()
 
 
 # -------------------------------------------------------- #
@@ -124,8 +138,18 @@ def load_images(image_filename):
 
 
 # -------------------------------------------------------- #
-
 if __name__ == "__main__":
     connect_to_db(app)
     db.create_all()
 
+    # store data in corresponding variables
+    user_filename = "seed_data/users.txt"
+    event_type_filename = "seed_data/event_types.txt"
+    rsvp_type_filename = "seed_data/rsvp_types.txt"
+    resource_type_filenanme = "seed_data/resource_types.txt"
+
+    # Call the defined functions and pass in variable names
+    load_users(user_filename)
+    create_event_types(event_type_filename)
+    create_rsvp_types(rsvp_type_filename)
+    create_resource_types(resource_type_filenanme)

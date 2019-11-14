@@ -1,0 +1,3 @@
+food|Food|What to eat....the eternal question.|True
+ent|Entertainment|Board games, video games, movies and music.|True
+act|Activities|Painting, terrarium making, cooking classes, and everything else in between.|True
