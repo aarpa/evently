@@ -75,10 +75,8 @@ def load_events(event_filename):
         end_on = datetime.strptime(end_str, "%m/%d/%Y %H:%M")
         created_on = datetime.strptime(created_str, "%m/%d/%Y %H:%M")
 
-
         # Instantiate event
-        event = Event(event_id=event_id,
-                      host=host,
+        event = Event(host=host,
                       category=category,
                       title=title,
                       start_on=start_on,
@@ -116,10 +114,30 @@ def create_rsvp_types(rsvp_type_filename):
 
 # -------------------------------------------------------- #
 def load_invites(invite_filename):
-  """Load invite from invite_data.csv into DB."""
+    """Load invite from invite_data.csv into DB."""
 
-  # Write code here to loop over invite data and populate DB.
+    # Write code here to loop over invite data and populate DB.
 
+    print("Invites")
+
+    for i, row in enumerate(open(invite_filename)):
+        row = row.rstrip()
+
+        user_id, event_id, rsvp = row.split("\t")
+
+        user_id = int(user_id)
+        event_id = int(event_id)
+
+        # Instantiate invite
+        invite = Invitation(user_id=user_id,
+                            event_id=event_id,
+                            rsvp=rsvp)
+
+        # Add invite to session
+        db.session.add(invite)
+
+    # Commit all invite instances to DB
+    db.session.commit()
 
 
 # -------------------------------------------------------- #
@@ -167,7 +185,7 @@ if __name__ == "__main__":
     # store data in corresponding variables
     user_filename = "seed_data/users.txt"
     event_type_filename = "seed_data/event_types.txt"
-    event_filename = 
+    event_filename = "seed_data/events.txt"
     rsvp_type_filename = "seed_data/rsvp_types.txt"
     invite_filename = 
     resource_type_filenanme = "seed_data/resource_types.txt"
@@ -177,10 +195,10 @@ if __name__ == "__main__":
     # Call the defined functions and pass in variable names
     load_users(user_filename)
     create_event_types(event_type_filename)
+    load_events(event_filename)
     create_rsvp_types(rsvp_type_filename)
     create_resource_types(resource_type_filenanme)
 
-    load_events(event_filename)
     load_invites(invite_filename)
     load_resources(resource_filename)
     load_images(image_filename)

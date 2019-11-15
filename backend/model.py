@@ -221,15 +221,15 @@ class Invitation(db.Model):
                          db.ForeignKey('events.event_id'))
     
     rsvp = db.Column(db.String(10),
-                     nullable=False)    # branch this out to a separate entity
+                     db.ForeignKey('rsvp_types.code'))
     
-    created_on = db.Column(db.DateTime,
-                           nullable=False)
+    # created_on = db.Column(db.DateTime,
+    #                        nullable=False)  # save this as 2.0 feature
     
 
-    # ONE rsvp type to MANY rsvps
+    # ONE rsvp type to MANY invite rsvps
     rsvp_type = db.relationship("RSVP_Type",
-                            backref=db.backref("rsvps", order_by=invite_id))
+                            backref=db.backref("invites", order_by=invite_id))
 
 
 
@@ -239,7 +239,7 @@ class Invitation(db.Model):
         return f"""< Invitation: invite_id = {self.invite_id},
                                  user_id = {self.user_id},
                                  event_id = {self.event_id},
-                                 rsvp = {self.rsvp_status} >"""
+                                 rsvp = {self.rsvp} >"""
 
 
     ### Define instance methods here ###
