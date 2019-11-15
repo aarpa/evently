@@ -8,17 +8,6 @@ db = SQLAlchemy()
 # app.secret_key = 'something&super&duper&secretive'
 
 
-def connect_to_db(app):
-    """Connect the database to the Flask app."""
-
-    # Configurations to use the database.
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///events"
-    app.config["SQLALCHEMY_ECHO"] = False
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-    db.app = app
-    db.init_app(app)
-
 
 # ---------------------------------------------------------------------- #
 # Model definitions
@@ -127,10 +116,10 @@ class Event(db.Model):
                          primary_key=True)
     
     host = db.Column(db.Integer,
-                     db.ForeignKey('users.user_name'))
+                     db.ForeignKey('users.user_id'))
     
     category = db.Column(db.String(5),
-                         db.ForeignKey('event_types.name'))
+                         db.ForeignKey('event_types.code'))
     
     title = db.Column(db.String(50),
                       nullable=False)
@@ -302,11 +291,7 @@ class Resource_Type(db.Model):
                          nullable=False)
 
 
-    # ONE resource type to MANY resources
-    resources = db.relationship("Resource",
-                                backref=db.backref("resource_type", order_by=code))
-
-
+    
     def __repr__(self):
         """Human readable representation of event category object when printed."""
 
@@ -337,10 +322,15 @@ class Resource(db.Model):
                     nullable=False)
     
     category = db.Column(db.String(25),
-                         nullable=False)
+                         db.ForeignKey('resource_types.code'))
     
     cost = db.Column(db.Integer,
                      nullable=True)
+
+
+    # ONE resource type to MANY resources
+    resource_type = db.relationship("Resource_Type",
+                                backref=db.backref("resources", order_by=category))
 
 
     def __repr__(self):
@@ -358,8 +348,19 @@ class Resource(db.Model):
 # ---------------------------------------------------------------------- #
 # Helper functions
 
+def connect_to_db(app):
+    """Connect the database to the Flask app."""
+
+    # Configurations to use the database.
+    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///eventlydb"
+    app.config["SQLALCHEMY_ECHO"] = False
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    db.app = app
+    db.init_app(app)
+
+
 if __name__ == "__main__":
     from server import app
     connect_to_db(app)
-
     print("Connected to DB")

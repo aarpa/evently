@@ -48,6 +48,11 @@ def create_event_types(event_type_filename):
         row = row.rstrip()
         code, name, description, is_active = row.split("|")
 
+        if is_active == "True":
+            is_active = True
+        else:
+            is_active = False
+
         # Instantiate event type
         event_type = Event_Type(code=code,
                                 name=name,
@@ -71,6 +76,7 @@ def load_events(event_filename):
         row = row.rstrip()
         event_id, host, category, title, start_str, end_str, created_str = row.split("|")
 
+        host = int(host)
         start_on = datetime.strptime(start_str, "%m/%d/%Y %H:%M")
         end_on = datetime.strptime(end_str, "%m/%d/%Y %H:%M")
         created_on = datetime.strptime(created_str, "%m/%d/%Y %H:%M")
@@ -100,6 +106,11 @@ def create_rsvp_types(rsvp_type_filename):
         row = row.rstrip()
         code, name, is_active = row.split("|")
 
+        if is_active == "True":
+            is_active = True
+        else:
+            is_active = False
+
         # Instantiate rsvp type
         rsvp_type = RSVP_Type(code=code,
                               name=name,
@@ -123,7 +134,9 @@ def load_invites(invite_filename):
     for i, row in enumerate(open(invite_filename)):
         row = row.rstrip()
 
-        user_id, event_id, rsvp = row.split("\t")
+        values_list = row.split()
+
+        user_id, event_id, rsvp = values_list
 
         user_id = int(user_id)
         event_id = int(event_id)
@@ -142,13 +155,19 @@ def load_invites(invite_filename):
 
 # -------------------------------------------------------- #
 def create_resource_types(resource_type_filenanme):
-  """Seed specific types of resources in DB."""
+    """Seed specific types of resources in DB."""
 
     print("Resource Types")
 
     for i, row in enumerate(open(resource_type_filenanme)):
         row = row.rstrip()
         code, name, description, is_active = row.split("|")
+
+        if is_active == "True":
+            is_active = True
+        else:
+            is_active = False
+
 
         resource_type = Resource_Type(code=code,
                                       name=name,
@@ -199,19 +218,21 @@ if __name__ == "__main__":
     event_filename = "seed_data/events.txt"
     rsvp_type_filename = "seed_data/rsvp_types.txt"
     invite_filename = "seed_data/invites.txt"
-    resource_type_filenanme = "seed_data/resource_types.txt"
-    resource_filename = 
-    image_filename = 
+    resource_type_filename = "seed_data/resource_types.txt"
+    # resource_filename = 
+    # image_filename = 
 
-    # Call the defined functions and pass in variable names
-    load_users(user_filename)
-    create_event_types(event_type_filename)
-    load_events(event_filename)
-    create_rsvp_types(rsvp_type_filename)
-    load_invites(invite_filename)
-    create_resource_types(resource_type_filenanme)
+    # DONE USING THESE TO SEED DB
+    # load_users(user_filename)
+    # create_event_types(event_type_filename)
+    # load_events(event_filename)
+    # create_rsvp_types(rsvp_type_filename)
+    # load_invites(invite_filename)
+    # create_resource_types(resource_type_filename)
 
-    load_resources(resource_filename)
-    load_images(image_filename)
 
-    set_val_user_id()
+    # UNUSED - NEED TO CALL TO SEED DB
+    # load_resources(resource_filename)
+    # load_images(image_filename)
+
+    # set_val_user_id()
