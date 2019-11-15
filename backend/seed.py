@@ -164,17 +164,28 @@ def create_resource_types(resource_type_filenanme):
 
 # -------------------------------------------------------- #
 def load_resources(resource_filename):
-  """Load resources from resource_data.csv into DB."""
-
-
+    """Load resources from resource_data.csv into DB."""
 
 
 # -------------------------------------------------------- #
 def load_images(image_filename):
-  """Load images from image_data.csv into DB."""
+    """Load images from image_data.csv into DB."""
 
-  # Write code here to loop over image data and populate DB.
+    # Write code here to loop over image data and populate DB.
 
+
+# -------------------------------------------------------- #
+def set_val_user_id():
+    """Set value for the next user_id after seeding database"""
+
+    # Get the Max user_id in the database
+    result = db.session.query(func.max(User.user_id)).one()
+    max_id = int(result[0])
+
+    # Set the value for the next user_id to be max_id + 1
+    query = "SELECT setval('users_user_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': max_id + 1})
+    db.session.commit()
 
 
 # -------------------------------------------------------- #
@@ -187,7 +198,7 @@ if __name__ == "__main__":
     event_type_filename = "seed_data/event_types.txt"
     event_filename = "seed_data/events.txt"
     rsvp_type_filename = "seed_data/rsvp_types.txt"
-    invite_filename = 
+    invite_filename = "seed_data/invites.txt"
     resource_type_filenanme = "seed_data/resource_types.txt"
     resource_filename = 
     image_filename = 
@@ -197,8 +208,10 @@ if __name__ == "__main__":
     create_event_types(event_type_filename)
     load_events(event_filename)
     create_rsvp_types(rsvp_type_filename)
+    load_invites(invite_filename)
     create_resource_types(resource_type_filenanme)
 
-    load_invites(invite_filename)
     load_resources(resource_filename)
     load_images(image_filename)
+
+    set_val_user_id()
