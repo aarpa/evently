@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import NavBar from '../NavBar/NavBar';
 import Credentials from '../Credentials/Credentials';
+import UserList from '../UserList/UserList';
 import Profile from '../Profile/Profile';
 
 // function App() {
@@ -30,7 +31,7 @@ import Profile from '../Profile/Profile';
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { page: 'credentials'};
+    this.state = { page: 'userList'};
   }
 
   renderCredentials = () => {
@@ -42,10 +43,30 @@ class App extends React.Component {
     );
   }
 
-  renderProfile = () => {
+  renderUserList = () => {
+    const usersArray = [
+      {id: 1,
+       name: 'Arpa'},
+      {id: 2,
+       name: 'Asheq'}
+    ]
+
+    return (
+        <UserList users={usersArray} onUserClick={this.handleUserClick}/>
+    );
+  }
+
+  handleUserClick = (user) => {
+    this.setState({ 
+      page: 'profile',
+      user:  user
+    })
+  }
+
+  renderProfile = (userObj) => {
     return (
       <div>
-        <Profile />
+        <Profile user={userObj}/>
         <button onClick={() => this.changePage('credentials')}>Log Out</button>
       </div>
     );
@@ -61,8 +82,10 @@ class App extends React.Component {
 
     if (page === 'credentials') {
       toRender = this.renderCredentials();
+    } else if (page === 'userList') {
+      toRender = this.renderUserList();
     } else {
-      toRender = this.renderProfile();
+      toRender = this.renderProfile(this.state.user);
     }
 
     return (

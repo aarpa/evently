@@ -7,12 +7,12 @@ class Profile extends React.Component {
     this.state = { upcomingEventsTab: 'hosting' }
   }
 
-  renderBio = () => {
+  renderBio = (user) => {
     return (
       <div className="bio">
         <img src="profile_pic.jpg" alt="user"/>
         <div className="userInfo">
-          <h1>User's name</h1>
+          <h1>{user.name}</h1>
           <p>User's email</p>
           <p>User's phone number</p>
         </div>
@@ -75,9 +75,9 @@ class Profile extends React.Component {
 
 		return (
         <div className="profile">
-          {this.renderBio()}
+          {this.renderBio(this.props.user)}
           <button onClick={() => this.changeTab('hosting')}>Events Hosted by You</button>
-          <button onClick={() => this.changeTab('attending')}>Events Hosted by You</button>
+          <button onClick={() => this.changeTab('attending')}>Events You're Attending</button>
           {toRender}
         </div>        
   		);
