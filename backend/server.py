@@ -1,40 +1,37 @@
-# from jinja2 import StrictUndefined
-
 from flask import Flask, render_template, request, flash, redirect, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
-from model import db, connect_to_db  
+from model import db, connect_to_db, User
+import json
 
 app = Flask(__name__)
 app.secret_key = 'something&super&duper&secretive'
 
-# app.jinja_env.undefined = StrictUndefined
 
+# Standalone function to convert query result into dict
+def as_dict(row):
+       return {c.name: getattr(row, c.name) for c in row.__table__.columns}
 
 ###################################################
-# @app.route('/')
-# def home():
-#     """Display landing page."""
+@app.route('/api/users')
+def index():
+    """Display userlist page."""
 
-#     return render_template("index.html")
+    users = User.query.all()  # returns list of obj from DB
+
+    users_list = []
+
+    for user in users:
+        users_list.append(as_dict(user))
+
+    return {'usersList': users_list}
 
 
-# @app.route('/login')
-# def login():
-#     """Display login page."""
+# @app.route('/test')
+# def test():
+#     users = User.query.all()
 
-#     return render_template("login.html")
+#     return render_template("test.html", users=users)
 
-
-# @app.route('/signup')
-# def signup():
-#     """Display sign up page."""
-
-    # render_template("signup.html")
-
-# @app.route('/users/{user_id}/events')
-# def getUserEvents():
-    # Look in db for user events and return JSON data to client that is asking for the data
-    
 
 ###################################################
 # Helper functions

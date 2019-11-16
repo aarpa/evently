@@ -60,7 +60,6 @@ class User(db.Model):
                            backref=db.backref("user", order_by=user_id))
 
 
-
     def __repr__(self):
         """Human readable representation of user object when printed."""
 
@@ -93,7 +92,6 @@ class Event_Type(db.Model):
     # ONE event type to MANY events 
     events = db.relationship("Event",
                             backref=db.backref("event_type", order_by=name))
-
 
 
     def __repr__(self):
@@ -152,7 +150,6 @@ class Event(db.Model):
                             backref=db.backref("event", order_by=event_id))
 
 
-
     def __repr__(self):
         """Human readable representation of event object when printed."""
 
@@ -180,7 +177,6 @@ class RSVP_Type(db.Model):
     
     is_active = db.Column(db.Boolean,
                          nullable=False)
-
 
 
     def __repr__(self):
