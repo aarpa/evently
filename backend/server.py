@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, session, jsonify
+from flask import Flask, render_template, request, flash, redirect, session, jsonify, abort
 from flask_debugtoolbar import DebugToolbarExtension
 from model import db, connect_to_db, User
 import json
@@ -13,8 +13,8 @@ def as_dict(row):
 
 ###################################################
 @app.route('/api/users')
-def index():
-    """Display userlist page."""
+def get_user_list():
+    """Return userlist data in a JSON format."""
 
     users = User.query.all()  # returns list of obj from DB
 
@@ -24,6 +24,22 @@ def index():
         users_list.append(as_dict(user))
 
     return {'usersList': users_list}
+
+# ---------------------------------------------------------------------- #
+
+@app.route('/api/users/<int:user_id>')
+def get_user_profile(user_id):
+    """Return user data in a JSON format."""
+
+    user = User.query.filter_by(user_id=user_id).first()
+
+    if user:
+        return as_dict(user)
+    else:
+        abort(404)
+
+# ---------------------------------------------------------------------- #
+
 
 
 # @app.route('/test')
