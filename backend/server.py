@@ -133,6 +133,30 @@ def create_event():
     return {}
 
 # ------------------------------------------------------------------- #
+
+@app.route('/api/events/<int:event_id>', methods=['PUT'])
+def update_event(event_id):
+    """Update a specific event using JSON data in request."""
+
+    event = Event.query.get(event_id)
+    event_dict = as_dict(event)
+
+    req_body = request.get_json()
+    req_body_keys = list(req_body.keys())
+
+    for item in req_body_keys:
+        event_dict[item] = req_body[item]
+
+    for key in event_dict:
+        # event.key = event_dict[key]
+        setattr(event, key, event_dict[key])
+
+    db.session.commit()
+
+    return event_dict
+
+
+# ------------------------------------------------------------------- #
 # Helper functions
 
 if __name__ == "__main__":
