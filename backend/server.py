@@ -16,7 +16,7 @@ def as_dict(row):
 
 @app.route('/api/users')
 def get_users_list():
-    """Return list of users in a JSON format."""
+    """Return all users in a JSON format."""
 
     users = User.query.all()  # list of objs
 
@@ -31,7 +31,7 @@ def get_users_list():
 
 @app.route('/api/users/<int:user_id>')
 def get_user_profile(user_id):
-    """Return user data in a JSON format."""
+    """Return a specific user's data in a JSON format."""
 
     user = User.query.get(user_id)
 
@@ -99,13 +99,23 @@ def get_events_list():
 
 # ------------------------------------------------------------------- #
 
+@app.route('/api/events/<int:event_id>')
+def get_event(event_id):
+    """Return a specific event in JSON format."""
+
+    event = Event.query.get(event_id)
+
+    return as_dict(event)
+
+# ------------------------------------------------------------------- #
+
 @app.route('/api/events', methods=['POST'])
 def create_event():
-    """Add info about a new event into database."""
+    """Add a new event into database."""
     
+    # POST reqs have a body, so extract out the parsed JSON data
+    # Don't use HTML form requests --> request.form.args()
     req_body = request.get_json()
-    print(req_body)
-    print(type(req_body))
 
     datetime_format = "%m/%d/%Y %H:%M"
 
@@ -114,7 +124,7 @@ def create_event():
     req_body['created_on'] = datetime.strptime(req_body['created_on'], datetime_format)
 
 
-    # ** is used to "spread" an object into keyword arguments, where the key = argument name, and the value = argument value
+    # Note: ** is used to "spread" an object into keyword arguments, where (key=argument name), and (value=argument value)
     event = Event(**req_body)
 
     db.session.add(event)
@@ -122,15 +132,7 @@ def create_event():
 
     return {}
 
-
-# @app.route('/test')
-# def test():
-#     users = User.query.all()
-
-#     return render_template("test.html", users=users)
-
-
-###################################################
+# ------------------------------------------------------------------- #
 # Helper functions
 
 if __name__ == "__main__":
