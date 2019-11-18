@@ -82,6 +82,22 @@ def update_user(user_id):
     return {}
 
 # ------------------------------------------------------------------- #
+
+@app.route('/api/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    """Delete a user from the DB."""
+
+    del_user = User.query.get(user_id)
+
+    if del_user:
+        db.session.delete(del_user)
+        db.session.commit()
+    else:
+        abort(404)
+
+    return {}
+
+# ------------------------------------------------------------------- #
 @app.route('/api/users/<int:user_id>/hosted-events')
 def get_user_hosted_events(user_id):
     """Return events hosted by a user in a JSON format."""
@@ -152,6 +168,28 @@ def get_event(event_id):
 
 # ------------------------------------------------------------------- #
 
+@app.route('/api/events/<int:event_id>/guests')
+def get_event_guests(event_id):
+    """Return users who are invited to an event in a JSON format."""
+
+    event = Event.query.get(event_id)
+
+    invites = event.invites
+
+    guest_list = []
+
+    for invite in invites:
+        invite_dict = as_dict(invite)
+
+        user = User.query.get(invite_dict['user_id'])
+        user_dict = as_dict(user)
+
+        guest_list.append(user_dict)
+
+    return {'guestList': guest_list}
+
+# ------------------------------------------------------------------- #
+
 @app.route('/api/events', methods=['POST'])
 def create_event():
     """Add a new event into database."""
@@ -213,28 +251,6 @@ def delete_event(event_id):
         abort(404)
 
     return {}
-
-# ------------------------------------------------------------------- #
-
-@app.route('/api/events/<int:event_id>/guests')
-def get_event_guests(event_id):
-    """Return users who are invited to an event in a JSON format."""
-
-    event = Event.query.get(event_id)
-
-    invites = event.invites
-
-    guest_list = []
-
-    for invite in invites:
-        invite_dict = as_dict(invite)
-
-        user = User.query.get(invite_dict['user_id'])
-        user_dict = as_dict(user)
-
-        guest_list.append(user_dict)
-
-    return {'guestList': guest_list}
 
 # ------------------------------------------------------------------- #
 
