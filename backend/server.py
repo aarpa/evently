@@ -15,7 +15,7 @@ def as_dict(row):
 # ------------------------------------------------------------------- #
 
 @app.route('/api/users')
-def get_users_list():
+def get_all_users():
     """Return all users in a JSON format."""
 
     users = User.query.all()  # list of objs
@@ -85,7 +85,7 @@ def get_user_invites(user_id):
 # ------------------------------------------------------------------- #
 
 @app.route('/api/events')
-def get_events_list():
+def get_all_events():
     """Return list of events in a JSON format."""
 
     events = Event.query.all()  # list of objs
@@ -153,8 +153,45 @@ def update_event(event_id):
 
     db.session.commit()
 
-    return event_dict
+    return {}
 
+# ------------------------------------------------------------------- #
+
+@app.route('/api/events/<int:event_id>', methods=['DELETE'])
+def delete_event(event_id):
+    """Delete an event from the DB."""
+
+    del_event = Event.query.get(event_id)
+
+    if del_event:
+        db.session.delete(del_event)
+        db.session.commit()
+    else:
+        abort(404)
+
+    return {}
+
+# ------------------------------------------------------------------- #
+
+@app.route('/api/events/<int:event_id>/guests')
+def get_event_guests(event_id):
+    """Return users who are invited to an event in a JSON format."""
+
+    event = Event.query.get(event_id)
+
+    invites = event.invites
+
+    guest_list = []
+
+    for invite in invites:
+        invite_dict = as_dict(invite)
+
+        user = User.query.get(invite_dict['user_id'])
+        user_dict = as_dict(user)
+
+        guest_list.append(user_dict)
+
+    return {'guestList': guest_list}
 
 # ------------------------------------------------------------------- #
 # Helper functions
