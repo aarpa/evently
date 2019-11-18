@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, session, jsonify, abort
 from flask_debugtoolbar import DebugToolbarExtension
-from model import db, connect_to_db, User, Event
+from model import db, connect_to_db, User, Event, RSVP_Type
 from datetime import datetime
 
 app = Flask(__name__)
@@ -105,7 +105,10 @@ def get_event(event_id):
 
     event = Event.query.get(event_id)
 
-    return as_dict(event)
+    if event:
+        return as_dict(event)
+    else:
+        abort(404)
 
 # ------------------------------------------------------------------- #
 
@@ -192,6 +195,21 @@ def get_event_guests(event_id):
         guest_list.append(user_dict)
 
     return {'guestList': guest_list}
+
+# ------------------------------------------------------------------- #
+
+@app.route('/api/rsvp-types')
+def get_rsvp_types():
+    """Return types of rsvp in a JSON format."""
+
+    rsvp_types = RSVP_Type.query.filter_by(is_active=True).all()
+
+    rsvp_types_list = []
+
+    for obj in rsvp_types:
+        rsvp_types_list.append(as_dict(obj))
+
+    return {'rsvpTypesList': rsvp_types_list}
 
 # ------------------------------------------------------------------- #
 # Helper functions
