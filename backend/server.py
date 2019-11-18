@@ -42,6 +42,23 @@ def get_user_profile(user_id):
 
 # ------------------------------------------------------------------- #
 
+@app.route('/api/users', methods=['POST'])
+def create_user():
+    """Add a new user into database."""
+    
+    # POST reqs have a body, so extract out the parsed JSON data
+    # Don't use HTML form requests --> request.form.args()
+    req_body = request.get_json()
+
+    # Note: ** is used to "spread" an object into keyword arguments, where (key=argument name), and (value=argument value)
+    user = User(**req_body)
+
+    db.session.add(user)
+    db.session.commit()
+
+    return {}
+
+# ------------------------------------------------------------------- #
 @app.route('/api/users/<int:user_id>/hosted-events')
 def get_user_hosted_events(user_id):
     """Return events hosted by a user in a JSON format."""
