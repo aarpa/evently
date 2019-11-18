@@ -59,6 +59,29 @@ def create_user():
     return {}
 
 # ------------------------------------------------------------------- #
+
+@app.route('/api/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    """Update a specific user using JSON data in request."""
+
+    user = User.query.get(user_id)
+    user_dict = as_dict(user)
+
+    req_body = request.get_json()
+    req_body_keys = list(req_body.keys())
+
+    for item in req_body_keys:
+        user_dict[item] = req_body[item]
+
+    for key in user_dict:
+        # user.key = user_dict[key]
+        setattr(user, key, user_dict[key])
+
+    db.session.commit()
+
+    return {}
+
+# ------------------------------------------------------------------- #
 @app.route('/api/users/<int:user_id>/hosted-events')
 def get_user_hosted_events(user_id):
     """Return events hosted by a user in a JSON format."""
