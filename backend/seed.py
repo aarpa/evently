@@ -1,7 +1,7 @@
 """Utility file to seed data in DB using data from /seed_data/ directory."""
 
 from datetime import datetime
-import sqlalchemy
+from sqlalchemy import func
 
 from model import db, User, Event_Type, Event, RSVP_Type, Invitation, Image, Resource_Type, Resource, connect_to_db
 from server import app
@@ -197,13 +197,26 @@ def load_images(image_filename):
 def set_val_user_id():
     """Set value for the next user_id after seeding database"""
 
-    # Get the Max user_id in the database
+    # Get the max user_id in the database
     result = db.session.query(func.max(User.user_id)).one()
     max_id = int(result[0])
 
-    # Set the value for the next user_id to be max_id + 1
+    # Set the value for the next user_id to be max_id
     query = "SELECT setval('users_user_id_seq', :new_id)"
-    db.session.execute(query, {'new_id': max_id + 1})
+    db.session.execute(query, {'new_id': max_id})
+    db.session.commit()
+
+# -------------------------------------------------------- #
+def set_val_event_id():
+    """Set value for the next event_id after seeding database"""
+
+    # Get the max event_id in the database
+    result = db.session.query(func.max(Event.event_id)).one()
+    max_id = int(result[0])
+
+    # Set the value for the next event_id to be max_id
+    query = "SELECT setval('events_event_id_seq', :new_id)"
+    db.session.execute(query, {'new_id': max_id})
     db.session.commit()
 
 
@@ -235,4 +248,5 @@ if __name__ == "__main__":
     # load_resources(resource_filename)
     # load_images(image_filename)
 
-    # set_val_user_id()
+    set_val_user_id()
+    set_val_event_id()
