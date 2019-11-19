@@ -231,6 +231,12 @@ class Invitation(db.Model):
                             backref=db.backref("invites", order_by=invite_id))
 
 
+    def update(self, **update_dict):
+        """Update an invite instance using JSON data in request."""
+
+        for key, val in update_dict.items():
+            setattr(self, key, val)
+
 
     def __repr__(self):
         """Human readable representation of invitation object when printed."""

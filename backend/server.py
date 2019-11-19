@@ -162,28 +162,6 @@ def get_event(event_id):
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/events/<int:event_id>/guests')
-def get_event_guests(event_id):
-    """Return users who are invited to an event in a JSON format."""
-
-    event = Event.query.get(event_id)
-
-    invites = event.invites
-
-    guest_list = []
-
-    for invite in invites:
-        invite_dict = as_dict(invite)
-
-        user = User.query.get(invite_dict['user_id'])
-        user_dict = as_dict(user)
-
-        guest_list.append(user_dict)
-
-    return jsonify(guest_list)
-
-# ------------------------------------------------------------------- #
-
 @app.route('/api/events', methods=['POST'])
 def create_event():
     """Add a new event into database."""
@@ -242,45 +220,36 @@ def delete_event(event_id):
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/rsvp-types')
-def get_rsvp_types():
-    """Return types of rsvp in a JSON format."""
+@app.route('/api/events/<int:event_id>/invites')
+def get_event_invites(event_id):
+    """Return list of users who are invited to an event in a JSON format."""
 
-    rsvp_types = RSVP_Type.query.filter_by(is_active=True).all()
+    event = Event.query.get(event_id)
 
-    rsvp_types_list = []
-
-    for obj in rsvp_types:
-        rsvp_types_list.append(as_dict(obj))
-
-    return jsonify(rsvp_types_list)
-
-# ------------------------------------------------------------------- #
-
-@app.route('/api/invites')
-def get_all_invites():
-    """Return list of invites in a JSON format."""
-
-    invites = Invitation.query.all()  # list of objs
+    invites = event.invites
 
     invites_list = []
 
     for invite in invites:
-        invites_list.append(as_dict(invite))
+        invite_dict = as_dict(invite)
+
+        # query in and add user details as another property of invite_dict
+        user = User.query.get(invite_dict['user_id'])
+        user_dict = as_dict(user)
+        invite_dict['user'] = user_dict
+
+        invites_list.append(invite_dict)
 
     return jsonify(invites_list)
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/invites', methods=['POST'])
+@app.route('/api/events/<int:event_id>/invites', methods=['POST'])
 def create_invite():
-    """Add a new invite into database."""
+    """Add a new invite for an event into database."""
     
-    # POST reqs have a body, so extract out the parsed JSON data
-    # Don't use HTML form requests --> request.form.args()
     req_body = request.get_json()
 
-    # Note: ** is used to "spread" an object into keyword arguments, where (key=argument name), and (value=argument value)
     invite = Invitation(**req_body)
 
     db.session.add(invite)
@@ -304,6 +273,37 @@ def update_invite(invite_id):
     db.session.commit()
 
     return as_dict(invite)
+
+# ------------------------------------------------------------------- #
+
+@app.route('/api/invites/<int:invite_id>', methods=['DELETE'])
+def delete_invite(invite_id):
+    """Delete an invite from the DB."""
+
+    del_invite = Invitation.query.get(invite_id)
+
+    if del_invite:
+        db.session.delete(del_invite)
+        db.session.commit()
+    else:
+        abort(404)
+
+    return {}
+
+# ------------------------------------------------------------------- #
+
+@app.route('/api/rsvp-types')
+def get_rsvp_types():
+    """Return types of rsvp in a JSON format."""
+
+    rsvp_types = RSVP_Type.query.filter_by(is_active=True).all()
+
+    rsvp_types_list = []
+
+    for obj in rsvp_types:
+        rsvp_types_list.append(as_dict(obj))
+
+    return jsonify(rsvp_types_list)
 
 # ------------------------------------------------------------------- #
 
