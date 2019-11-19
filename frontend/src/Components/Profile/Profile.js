@@ -20,6 +20,7 @@ class Profile extends React.Component {
     );
   }
 
+  // Need to query in this data from backend
   renderHostingEvents = () => {
     return (
       <div className="hostingEvents">
@@ -39,6 +40,7 @@ class Profile extends React.Component {
     );
   }
 
+  // Need to query in this data from backend
   renderAttendingEvents = () => {
     return (
       <div className="attendingEvents">

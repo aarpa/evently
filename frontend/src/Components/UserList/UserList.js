@@ -1,27 +1,32 @@
 import React from 'react';
+import $ from "jquery";
 
 class UserList extends React.Component {
   constructor(props) {
     super(props)  // props = an obj of stuff
+    this.state = { users: [] }
+  }
+
+  componentDidMount() {
+    $.get('/api/users', response => this.setState({users: response}))
   }
 
   render() {
-    let users = this.props.users;  // arr of obj
+    let users = this.state.users;
 
-    let userItems = [];
+    let userListItems = [];
 
     for (let user of users) {
-      const handleClick = () => {
-        this.props.onUserClick(user)
-        console.log("this went through")
-      }
+      // const handleClick = () => {
+      //   this.props.onUserClick(user)
+      // }
 
-      userItems.push(<li onClick={handleClick}>{user.name}</li>)
+      userListItems.push(<li>{user.name}</li>)
     }
 
     return (
       <ul>
-        {userItems}
+        {userListItems}
       </ul>
     );
   }
