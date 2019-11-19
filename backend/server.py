@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, session, jsonify, abort
 from flask_debugtoolbar import DebugToolbarExtension
-from model import db, connect_to_db, User, Event, RSVP_Type
+from model import db, connect_to_db, User, Event, RSVP_Type, Invitation
 from datetime import datetime
 
 app = Flask(__name__)
@@ -25,12 +25,12 @@ def get_all_users():
     for user in users:
         users_list.append(as_dict(user))
 
-    return {'usersList': users_list}
+    return jsonify(users_list)
 
 # ------------------------------------------------------------------- #
 
 @app.route('/api/users/<int:user_id>')
-def get_user_profile(user_id):
+def get_user(user_id):
     """Return a specific user's data in a JSON format."""
 
     user = User.query.get(user_id)
@@ -65,21 +65,15 @@ def update_user(user_id):
     """Update a specific user using JSON data in request."""
 
     user = User.query.get(user_id)
-    user_dict = as_dict(user)
 
     req_body = request.get_json()
-    req_body_keys = list(req_body.keys())
 
-    for item in req_body_keys:
-        user_dict[item] = req_body[item]
-
-    for key in user_dict:
-        # user.key = user_dict[key]
-        setattr(user, key, user_dict[key])
+    # Call instance method to update self by passing in the request body
+    user.update(**req_body)
 
     db.session.commit()
 
-    return {}
+    return as_dict(user)
 
 # ------------------------------------------------------------------- #
 
@@ -111,7 +105,7 @@ def get_user_hosted_events(user_id):
     for event in events:
         hosted_events.append(as_dict(event))
 
-    return {'hostedEventsList': hosted_events}
+    return jsonify(hosted_events)
 
 
 # ------------------------------------------------------------------- #
@@ -136,7 +130,7 @@ def get_user_invites(user_id):
 
         invites_list.append(invite_dict)
 
-    return {'invitesList': invites_list}
+    return jsonify(invites_list)
 
 # ------------------------------------------------------------------- #
 
@@ -151,7 +145,7 @@ def get_all_events():
     for event in events:
         events_list.append(as_dict(event))
 
-    return {'eventsList': events_list}
+    return jsonify(events_list)
 
 # ------------------------------------------------------------------- #
 
@@ -186,7 +180,7 @@ def get_event_guests(event_id):
 
         guest_list.append(user_dict)
 
-    return {'guestList': guest_list}
+    return jsonify(guest_list)
 
 # ------------------------------------------------------------------- #
 
@@ -211,7 +205,7 @@ def create_event():
     db.session.add(event)
     db.session.commit()
 
-    return {}
+    return as_dict(event)
 
 # ------------------------------------------------------------------- #
 
@@ -220,21 +214,15 @@ def update_event(event_id):
     """Update a specific event using JSON data in request."""
 
     event = Event.query.get(event_id)
-    event_dict = as_dict(event)
 
     req_body = request.get_json()
-    req_body_keys = list(req_body.keys())
 
-    for item in req_body_keys:
-        event_dict[item] = req_body[item]
-
-    for key in event_dict:
-        # event.key = event_dict[key]
-        setattr(event, key, event_dict[key])
+    # Call instance method to update self by passing in the request body
+    event.update(**req_body)
 
     db.session.commit()
 
-    return {}
+    return as_dict(event)
 
 # ------------------------------------------------------------------- #
 
@@ -265,10 +253,59 @@ def get_rsvp_types():
     for obj in rsvp_types:
         rsvp_types_list.append(as_dict(obj))
 
-    return {'rsvpTypesList': rsvp_types_list}
+    return jsonify(rsvp_types_list)
 
 # ------------------------------------------------------------------- #
-# Helper functions
+
+@app.route('/api/invites')
+def get_all_invites():
+    """Return list of invites in a JSON format."""
+
+    invites = Invitation.query.all()  # list of objs
+
+    invites_list = []
+
+    for invite in invites:
+        invites_list.append(as_dict(invite))
+
+    return jsonify(invites_list)
+
+# ------------------------------------------------------------------- #
+
+@app.route('/api/invites', methods=['POST'])
+def create_invite():
+    """Add a new invite into database."""
+    
+    # POST reqs have a body, so extract out the parsed JSON data
+    # Don't use HTML form requests --> request.form.args()
+    req_body = request.get_json()
+
+    # Note: ** is used to "spread" an object into keyword arguments, where (key=argument name), and (value=argument value)
+    invite = Invitation(**req_body)
+
+    db.session.add(invite)
+    db.session.commit()
+
+    return as_dict(invite)
+
+# ------------------------------------------------------------------- #
+
+@app.route('/api/invites/<int:invite_id>', methods=['PUT'])
+def update_invite(invite_id):
+    """Update a specific invite using JSON data in request."""
+
+    invite = Invitation.query.get(invite_id)
+
+    req_body = request.get_json()
+
+    # Call instance method to update self by passing in the request body
+    invite.update(**req_body)
+
+    db.session.commit()
+
+    return as_dict(invite)
+
+# ------------------------------------------------------------------- #
 
 if __name__ == "__main__":
   app.debug = True

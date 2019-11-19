@@ -59,6 +59,12 @@ class User(db.Model):
     resources = db.relationship("Resource", 
                            backref=db.backref("user", order_by=user_id))
 
+    def update(self, **update_dict):
+        """Update a user instance using JSON data in request."""
+
+        for key, val in update_dict.items():
+            setattr(self, key, val)
+
 
     def __repr__(self):
         """Human readable representation of user object when printed."""
@@ -150,6 +156,13 @@ class Event(db.Model):
                             backref=db.backref("event", order_by=event_id))
 
 
+    def update(self, **update_dict):
+        """Update an event instance using JSON data in request."""
+
+        for key, val in update_dict.items():
+            setattr(self, key, val)
+
+
     def __repr__(self):
         """Human readable representation of event object when printed."""
 
@@ -209,7 +222,8 @@ class Invitation(db.Model):
                      db.ForeignKey('rsvp_types.code'))
     
     # created_on = db.Column(db.DateTime,
-    #                        nullable=False)  # save this as 2.0 feature
+    #                        nullable=False,
+                             # default=datetime.now  # save this as 2.0 feature
     
 
     # ONE rsvp type to MANY invite rsvps
