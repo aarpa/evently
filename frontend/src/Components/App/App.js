@@ -1,65 +1,94 @@
-import React from 'react';
-import './App.css';
-import NavBar from '../NavBar/NavBar';
-import Credentials from '../Credentials/Credentials';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  // useParams,
+  useRouteMatch
+} from "react-router-dom";
 import UserList from '../UserList/UserList';
-import Profile from '../Profile/Profile';
 
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = { page: 'userList'};
-  }
 
-  changePage = (page) => {
-    this.setState({ page: page});
-  }
-
-  // renderCredentials = () => {
-  //   return (
-  //     <div>
-  //       <Credentials />
-  //       <button onClick={() => this.changePage('profile')}>Go to Profile Page</button>
-  //     </div>
-  //   );
-  // }
-
-  
-  renderUserList = () => {
-    return (
-      <UserList />
-    );
-  }
-
-  renderProfile = (userObj) => {
-    return (
+export default function App() {
+  return (
+    <Router>
       <div>
-        <Profile user={userObj}/>
-        <button onClick={() => this.changePage('credentials')}>Log Out</button>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/index">Index</Link>
+          </li>
+        </ul>
+
+        <hr />
+
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/index">
+            <Index />
+          </Route>
+        </Switch>
       </div>
-    );
-  }
-
-  render() {
-    let page = this.state.page;
-    let toRender;
-
-    if (page === 'credentials') {
-      toRender = this.renderCredentials();
-    } else if (page === 'userList') {
-      toRender = this.renderUserList();
-    } else {
-      toRender = this.renderProfile(this.state.user);
-    }
-
-    return (
-      <div className="app">
-        <NavBar />
-        {toRender}
-      </div>
-    );
-  }
+    </Router>
+  );
 }
 
-export default App;
+
+function Home() {
+  return (
+    <div>
+      <h2>Welcome to Evently!</h2>
+    </div>
+  );
+}
+
+
+function Index() {
+
+  let { path, url } = useRouteMatch();
+
+  return (
+    <div>
+      <h2>Index</h2>
+
+      <ul>
+        <li>
+          <Link to={`${url}/users`}>Users</Link>
+        </li>
+      </ul>
+
+      <Switch>
+        <Route exact path={path}>
+          <h3>Please select a topic.</h3>
+        </Route>
+        <Route path={`${path}/:topicId`}>
+          <UserList />
+        </Route>
+      </Switch>
+
+    </div>
+  );
+}
+
+
+// function Users() {
+//   fetch('/api/users').then(response => {
+//     let userListItems = [];
+
+//     for (let user of response) {
+//       userListItems.push(<li>{user.name}</li>)
+//     }
+
+//     return (
+//       <ul>
+//         {userListItems}
+//       </ul>
+//     );
+//   })
+// }
