@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css"
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,7 +21,10 @@ export default function App() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/index">Index</Link>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/signup">Signup</Link>
           </li>
         </ul>
 
@@ -30,8 +34,11 @@ export default function App() {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route path="/index">
-            <Index />
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup">
+            <Signup />
           </Route>
         </Switch>
       </div>
@@ -43,52 +50,64 @@ export default function App() {
 function Home() {
   return (
     <div>
-      <h2>Welcome to Evently!</h2>
+      <h1>Welcome to Evently!</h1>
     </div>
   );
 }
 
 
-function Index() {
-
-  let { path, url } = useRouteMatch();
-
+function Login() {
   return (
     <div>
-      <h2>Index</h2>
-
-      <ul>
-        <li>
-          <Link to={`${url}/users`}>Users</Link>
-        </li>
-      </ul>
-
-      <Switch>
-        <Route exact path={path}>
-          <h3>Please select a topic.</h3>
-        </Route>
-        <Route path={`${path}/:topicId`}>
-          <UserList />
-        </Route>
-      </Switch>
-
+      <h1>Sign in to Evently</h1>
+      <form>
+        <div>
+          <p>Email</p>
+          <input type="text" name="email" required></input>
+        </div>
+        <div>
+          <p>Password</p>
+          <input type="password" name="password" required></input>
+        </div>
+        <div>
+          <input type="submit" name="Sign in"></input>
+        </div>
+      </form>
     </div>
   );
 }
 
 
-// function Users() {
-//   fetch('/api/users').then(response => {
-//     let userListItems = [];
+function Signup() {
+  return (
+    <div>
+      <h1>Join Evently</h1>
+      <form>
+        <div>
+          <p>Name</p>
+          <input type="text" name="name" placeholder="Jane Doe" required></input>
+        </div>
+        <div>
+          <p>Phone Number</p>
+          <input type="tel" name="phone" placeholder="(123) 456-7890" required></input>
+        </div>
+        <div>
+          <p>Date of Birth</p>
+          <input type="date" name="dob" placeholder="mm/dd/yyyy" required></input>
+        </div>
+        <div>
+          <p>Email</p>
+          <input type="text" name="email" placeholder="janedoe@example.com" required></input>
+        </div>
+        <div>
+          <p>Password</p>
+          <input type="password" name="password" required></input>
+        </div>
+        <div>
+          <input type="submit" name="Submit"></input>
+        </div>
+      </form>
+    </div>
+  );
+}
 
-//     for (let user of response) {
-//       userListItems.push(<li>{user.name}</li>)
-//     }
-
-//     return (
-//       <ul>
-//         {userListItems}
-//       </ul>
-//     );
-//   })
-// }
