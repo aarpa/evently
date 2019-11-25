@@ -14,25 +14,26 @@ def as_dict(row):
 # API routes and responses
 # ------------------------------------------------------------------- #
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
     """Check login credentials against users table database."""
 
-    email = request.args.get('email')
-    password = request.args.get('password')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    print(email, password)
 
     user = User.query.filter(User.email == email, User.password == password).first()
     
     if user != None:
         session['user_id'] = user.user_id
-        return redirect('/api/users/<int:user_id>')
+        return redirect('/users/' + str(user.user_id))
     else:
-        flash("Invalid login. Please try again.")
-        return redirect('/login')
+        # flash("Invalid login. Please try again.")
+        return jsonify("Invalid login. Please try again.")
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/users')
+@app.route('/users')
 def get_all_users():
     """Return all users in a JSON format."""
 
@@ -47,7 +48,7 @@ def get_all_users():
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/users/<int:user_id>')
+@app.route('/users/<int:user_id>')
 def get_user(user_id):
     """Return a specific user's data in a JSON format."""
 
@@ -60,7 +61,7 @@ def get_user(user_id):
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/users', methods=['POST'])
+@app.route('/users', methods=['POST'])
 def create_user():
     """Add a new user into database."""
     
@@ -78,7 +79,7 @@ def create_user():
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/users/<int:user_id>', methods=['PUT'])
+@app.route('/users/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     """Update a specific user using JSON data in request."""
 
@@ -95,7 +96,7 @@ def update_user(user_id):
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/users/<int:user_id>', methods=['DELETE'])
+@app.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     """Delete a user from the DB."""
 
@@ -110,7 +111,7 @@ def delete_user(user_id):
     return {}
 
 # ------------------------------------------------------------------- #
-@app.route('/api/users/<int:user_id>/hosted-events')
+@app.route('/users/<int:user_id>/hosted-events')
 def get_user_hosted_events(user_id):
     """Return events hosted by a user in a JSON format."""
 
@@ -128,7 +129,7 @@ def get_user_hosted_events(user_id):
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/users/<int:user_id>/invites')
+@app.route('/users/<int:user_id>/invites')
 def get_user_invites(user_id):
     """Return events to which a user is invited in a JSON format."""
 
@@ -152,7 +153,7 @@ def get_user_invites(user_id):
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/events')
+@app.route('/events')
 def get_all_events():
     """Return list of events in a JSON format."""
 
@@ -167,32 +168,39 @@ def get_all_events():
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/events/<int:event_id>')
+@app.route('/events/<int:event_id>')
 def get_event(event_id):
     """Return a specific event in JSON format."""
 
     event = Event.query.get(event_id)
+    print("\n\n\n\n", event)
 
     if event:
         return as_dict(event)
     else:
+        print("this is the else block")
         abort(404)
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/events', methods=['POST'])
+@app.route('/events', methods=['POST'])
 def create_event():
     """Add a new event into database."""
     
-    # POST reqs have a body, so extract out the parsed JSON data
-    # Don't use HTML form requests --> request.form.args()
-    req_body = request.get_json()
+    # POST reqs have a body, so you can extract out the parsed JSON data
+    # req_body = request.get_json()
 
-    datetime_format = "%m/%d/%Y %H:%M"
+    req_body = {
+        'title': request.form.get('title'),
+        'start_on': request.form.get('startTime'),
+        'end_on': request.form.get('endTime')
+    } 
+
+    datetime_format = "%Y-%m-%dT%H:%M"
 
     req_body['start_on'] = datetime.strptime(req_body['start_on'], datetime_format)
     req_body['end_on'] = datetime.strptime(req_body['end_on'], datetime_format)
-    req_body['created_on'] = datetime.strptime(req_body['created_on'], datetime_format)
+    req_body['created_on'] = datetime.now()
 
 
     # Note: ** is used to "spread" an object into keyword arguments, where (key=argument name), and (value=argument value)
@@ -201,11 +209,15 @@ def create_event():
     db.session.add(event)
     db.session.commit()
 
-    return as_dict(event)
+    # Need to refresh db.session to obtain the newly created event instance
+    # Useful for extracting out the event id to redirect to another API
+    db.session.refresh(event)
+
+    return jsonify(event.event_id)
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/events/<int:event_id>', methods=['PUT'])
+@app.route('/events/<int:event_id>', methods=['PUT'])
 def update_event(event_id):
     """Update a specific event using JSON data in request."""
 
@@ -222,7 +234,7 @@ def update_event(event_id):
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/events/<int:event_id>', methods=['DELETE'])
+@app.route('/events/<int:event_id>', methods=['DELETE'])
 def delete_event(event_id):
     """Delete an event from the DB."""
 
@@ -238,7 +250,7 @@ def delete_event(event_id):
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/events/<int:event_id>/invites')
+@app.route('/events/<int:event_id>/invites')
 def get_event_invites(event_id):
     """Return list of users who are invited to an event in a JSON format."""
 
@@ -262,7 +274,7 @@ def get_event_invites(event_id):
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/events/<int:event_id>/invites', methods=['POST'])
+@app.route('/events/<int:event_id>/invites', methods=['POST'])
 def create_invite():
     """Add a new invite for an event into database."""
     
@@ -277,7 +289,7 @@ def create_invite():
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/invites/<int:invite_id>', methods=['PUT'])
+@app.route('/invites/<int:invite_id>', methods=['PUT'])
 def update_invite(invite_id):
     """Update a specific invite using JSON data in request."""
 
@@ -294,7 +306,7 @@ def update_invite(invite_id):
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/invites/<int:invite_id>', methods=['DELETE'])
+@app.route('/invites/<int:invite_id>', methods=['DELETE'])
 def delete_invite(invite_id):
     """Delete an invite from the DB."""
 
@@ -310,7 +322,7 @@ def delete_invite(invite_id):
 
 # ------------------------------------------------------------------- #
 
-@app.route('/api/rsvp-types')
+@app.route('/rsvp-types')
 def get_rsvp_types():
     """Return types of rsvp in a JSON format."""
 
