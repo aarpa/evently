@@ -1,15 +1,17 @@
 import React from "react";
-import "./App.css"
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
-  // useParams,
-  useRouteMatch
+  useParams,
+  // useRouteMatch
 } from "react-router-dom";
+// import $ from "jquery";
+import Credentials from '../Credentials/Credentials';
 import UserList from '../UserList/UserList';
-
+import EventForm from '../EventForm/EventForm';
+import Event from '../Event/Event';
 
 
 export default function App() {
@@ -21,10 +23,10 @@ export default function App() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/login">Login</Link>
+            <Link to="/users">Users</Link>
           </li>
           <li>
-            <Link to="/signup">Signup</Link>
+            <Link to="/create-event">Create a New Event</Link>
           </li>
         </ul>
 
@@ -32,81 +34,30 @@ export default function App() {
 
         <Switch>
           <Route exact path="/">
-            <Home />
+            <Credentials />
           </Route>
-          <Route path="/login">
-            <Login />
+          <Route exact path="/users">
+            <UserList />
           </Route>
-          <Route path="/signup">
-            <Signup />
+          <Route path="/users/:userId">
+            <Profile />
           </Route>
+          <Route path="/create-event">
+            <EventForm />
+          </Route>
+          <Route path="/events/:eventId" component={Event} />
         </Switch>
       </div>
     </Router>
   );
 }
 
+function Profile() {
+  let {user_id} = useParams();
 
-function Home() {
   return (
     <div>
-      <h1>Welcome to Evently!</h1>
-    </div>
-  );
-}
-
-
-function Login() {
-  return (
-    <div>
-      <h1>Sign in to Evently</h1>
-      <form>
-        <div>
-          <p>Email</p>
-          <input type="text" name="email" required></input>
-        </div>
-        <div>
-          <p>Password</p>
-          <input type="password" name="password" required></input>
-        </div>
-        <div>
-          <input type="submit" name="Sign in"></input>
-        </div>
-      </form>
-    </div>
-  );
-}
-
-
-function Signup() {
-  return (
-    <div>
-      <h1>Join Evently</h1>
-      <form>
-        <div>
-          <p>Name</p>
-          <input type="text" name="name" placeholder="Jane Doe" required></input>
-        </div>
-        <div>
-          <p>Phone Number</p>
-          <input type="tel" name="phone" placeholder="(123) 456-7890" required></input>
-        </div>
-        <div>
-          <p>Date of Birth</p>
-          <input type="date" name="dob" placeholder="mm/dd/yyyy" required></input>
-        </div>
-        <div>
-          <p>Email</p>
-          <input type="text" name="email" placeholder="janedoe@example.com" required></input>
-        </div>
-        <div>
-          <p>Password</p>
-          <input type="password" name="password" required></input>
-        </div>
-        <div>
-          <input type="submit" name="Submit"></input>
-        </div>
-      </form>
+      Hello, I'm the profile page. My Id is {user_id}
     </div>
   );
 }
