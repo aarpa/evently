@@ -40,9 +40,6 @@ export default function App() {
           <Route exact path="/users">
             <UserList />
           </Route>
-          <Route path="/users/:userId">
-            <Profile />
-          </Route>
           <Route path="/create-event">
             <EventForm />
           </Route>
