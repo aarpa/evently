@@ -10,6 +10,7 @@ import {
 // import $ from "jquery";
 import Credentials from '../Credentials/Credentials';
 import UserList from '../UserList/UserList';
+import Profile from '../Profile/Profile';
 import EventForm from '../EventForm/EventForm';
 import Event from '../Event/Event';
 
@@ -46,19 +47,9 @@ export default function App() {
             <EventForm />
           </Route>
           <Route path="/events/:eventId" component={Event} />
+          <Route path="/users/:userId" component={Profile} />
         </Switch>
       </div>
     </Router>
   );
 }
-
-function Profile() {
-  let {user_id} = useParams();
-
-  return (
-    <div>
-      Hello, I'm the profile page. My Id is {user_id}
-    </div>
-  );
-}
-
