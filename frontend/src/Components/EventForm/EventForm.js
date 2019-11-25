@@ -1,5 +1,6 @@
 import React from "react";
 import $ from "jquery";
+import { Redirect } from "react-router-dom";
 
 
 class EventForm extends React.Component {
@@ -8,7 +9,7 @@ class EventForm extends React.Component {
     this.state = {
       title: '',
       startTime: '',
-      endTime: ''
+      endTime: '',
     };
   }
 
@@ -25,11 +26,21 @@ class EventForm extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    $.post('/events', this.state, (response) => alert(`You created an event with id ${response}`))
+    
+    $.post('/events', this.state, (response) => {
+      // return alert(`You created an event with id ${response}`);
+
+      this.setState({eventId: response})
+    });
   }
 
 
   render() {
+    if (this.state.eventId) {
+      let redirectUrl = `/events/${this.state.eventId}`
+      return <Redirect to={redirectUrl} />
+    }
+
     return (
       <div>
         <h1>Create a New Event!</h1>
