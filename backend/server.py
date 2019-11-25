@@ -14,6 +14,24 @@ def as_dict(row):
 # API routes and responses
 # ------------------------------------------------------------------- #
 
+@app.route('/login')
+def login():
+    """Check login credentials against users table database."""
+
+    email = request.args.get('email')
+    password = request.args.get('password')
+
+    user = User.query.filter(User.email == email, User.password == password).first()
+    
+    if user != None:
+        session['user_id'] = user.user_id
+        return redirect('/api/users/<int:user_id>')
+    else:
+        flash("Invalid login. Please try again.")
+        return redirect('/login')
+
+# ------------------------------------------------------------------- #
+
 @app.route('/api/users')
 def get_all_users():
     """Return all users in a JSON format."""
