@@ -1,3 +1,10 @@
+/* 
+Parent component: App
+Objective: To render option to log in or sign up
+Browser URL: /
+Backend API: None
+*/
+
 import React from "react";
 import './Credentials.css';
 import {
@@ -40,7 +47,7 @@ function Login() {
   return (
     <div>
       <h1>Sign in to Evently</h1>
-      <form action='/login'>
+      <form action='/login' method='POST'>
         <div>
           <p>Email</p>
           <input type="text" name="email" required></input>

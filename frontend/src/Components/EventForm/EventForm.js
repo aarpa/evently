@@ -1,3 +1,10 @@
+/* 
+Parent component: App
+Objective: To render form to create new events --> once created, redirects that event's page
+Browser URL: /create-event
+Backend API: /events
+*/
+
 import React from "react";
 import $ from "jquery";
 import { Redirect } from "react-router-dom";

@@ -1,14 +1,23 @@
+/* 
+Parent component: App
+Objective: To render a list of users
+Browser URL: /users
+Backend API: /users
+*/
+
 import React from 'react';
 import $ from "jquery";
+import { Link } from "react-router-dom";
+
 
 class UserList extends React.Component {
   constructor(props) {
-    super(props)  // props = an obj of stuff
+    super(props)  
     this.state = { users: [] }
   }
 
   componentDidMount() {
-    $.get('/api/users', response => this.setState({users: response}))
+    $.get('/users', response => this.setState({ users: response }));
   }
 
   render() {
@@ -17,11 +26,9 @@ class UserList extends React.Component {
     let userListItems = [];
 
     for (let user of users) {
-      // const handleClick = () => {
-      //   this.props.onUserClick(user)
-      // }
+      let redirectUrl = `/users/${user.user_id}`;
 
-      userListItems.push(<li>{user.name}</li>)
+      userListItems.push(<li key={user.user_id}><Link to={redirectUrl}>{user.name}</Link></li>);
     }
 
     return (
