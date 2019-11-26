@@ -1,7 +1,14 @@
+/* 
+Parent component: Profile
+Objective: To render a list of events that a user is hosting
+Browser URL: /user/:userId/hosted-events
+Backend API: /user/<user_id>/hosted-events
+*/
+
 import React from 'react';
 import { 
   Link,
-  // useRouteMatch
+  Redirect
 } from "react-router-dom";
 import $ from "jquery";
 
@@ -13,7 +20,6 @@ class HostedEvents extends React.Component {
   }
 
   componentDidMount() {
-    // let apiUrl = `/users/${this.props.match.url}/hosted-events`
     let apiUrl = this.props.match;
 
     $.get(apiUrl, response => this.setState({ hostedEvents: response }));
@@ -27,12 +33,9 @@ class HostedEvents extends React.Component {
     for (let event of hostedEvents) {
       let redirectUrl = `/events/${event.event_id}`;
 
-      // event is an object, so each attribute is a direct key 
       eventsList.push(
-        <div>
+        <div key={event.event_id}>
           <Link to={redirectUrl}>{event.title}</Link>
-          <p>Start Time and Date: {event.start_on}</p>
-          <p>End Time and Date: {event.end_on}</p>
         </div>
       );
     }
@@ -46,7 +49,6 @@ class HostedEvents extends React.Component {
         </div>        
       );
     }
-
   }
 }
 

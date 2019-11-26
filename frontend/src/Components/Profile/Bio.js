@@ -1,3 +1,10 @@
+/* 
+Parent component: Profile
+Objective: To render the bio of a user --> static portion at the top of page
+Browser URL: /users/:userId
+Backend API: /users/<user_id>
+*/
+
 import React from 'react';
 import $ from "jquery";
 

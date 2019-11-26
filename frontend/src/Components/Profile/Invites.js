@@ -1,7 +1,13 @@
+/* 
+Parent component: Profile
+Objective: To render a list of events that a user is invited to
+Browser URL: /user/:userId/invites
+Backend API: /user/<user_id>/invites
+*/
+
 import React from 'react';
 import { 
   Link,
-  // useRouteMatch
 } from "react-router-dom";
 import $ from "jquery";
 
@@ -29,10 +35,8 @@ class Invites extends React.Component {
 
       // eventObj has a key called 'event' that contains a nested obj
       eventsList.push(
-        <div>
+        <div key={eventObj.event.event_id}>
           <Link to={redirectUrl}>{eventObj.event.title}</Link>
-          <p>Start Time and Date: {eventObj.event.start_on}</p>
-          <p>End Time and Date: {eventObj.event.end_on}</p>
         </div>
       );
     }

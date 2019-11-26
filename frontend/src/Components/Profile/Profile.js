@@ -1,3 +1,10 @@
+/* 
+Parent component: App
+Objective: To render a user's profile page --> has bio & upcoming events as child components
+Browser URL: /users/:userId
+Backend API: /users/<user_id>
+*/
+
 import React from "react";
 import {
   BrowserRouter as Router,
