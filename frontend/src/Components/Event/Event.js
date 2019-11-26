@@ -1,33 +1,41 @@
-import React from 'react';
-// import {
-//   useParams
-// } from "react-router-dom";
-import $ from "jquery";
+/* 
+Parent component: App
+Objective: To render an event page --> has details and guest list as child components
+Browser URL: /events/:eventId
+Backend API: /events/<event_id>
+*/
+
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch
+} from "react-router-dom";
+import EventDetails from './EventDetails';
+import UserList from '../UserList/UserList';
 
 
-class Event extends React.Component {
-  constructor(props) {
-    super(props)  
-    this.state = { eventDetails: {} }
-  }
-
-  componentDidMount() {
-    let eventId = this.props.match.params.eventId;
-    let apiUrl = `/events/${eventId}`
-    $.get(apiUrl, response => this.setState({eventDetails: response}))
-  }
-
-  render() {
-    let eventDetails = this.state.eventDetails;
-
-    return (
+export default function Event() {
+  let { url } = useRouteMatch();
+  return (
+    <Router>
       <div>
-        <h1>{eventDetails.title}</h1>
-        <p>Start Time and Date: {eventDetails.start_on}</p>
-        <p>End Time and Date: {eventDetails.end_on}</p>
-      </div>
-    );
-  }
-}
+        <Route path="/events/:eventId" component={EventDetails} />
 
-export default Event;
+        <ul>
+          <li>
+            <Link to={`${url}/invites`}>Invite Guests</Link>
+          </li>
+        </ul>
+
+        <hr />
+
+        <Switch>
+          <Route path={`${url}/invites`} component={UserList} />
+        </Switch>
+      </div>
+    </Router>
+  );
+}
