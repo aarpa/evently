@@ -1,36 +1,39 @@
-import React from 'react';
-// import {
-//   useParams
-// } from "react-router-dom";
-import $ from "jquery";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch
+} from "react-router-dom";
+import Bio from './Bio';
+import HostedEvents from './HostedEvents';
+import Invites from './Invites';
 
 
-class Profile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      userBio: {}
-    }
-  }
+export default function Profile() {
+  let { url } = useRouteMatch();
+  return (
+    <Router>
+      <div>
+        <Route path="/users/:userId" component={Bio} />
 
-  componentDidMount() {
-    let userId = this.props.match.params.userId;
-    let apiUrl = `/users/${userId}`
-    
-    $.get(apiUrl, response => this.setState({ userBio: response }));
-  }
+        <ul>
+          <li>
+            <Link to={`${url}/hosted-events`}>Events You're Hosting</Link>
+          </li>
+          <li>
+            <Link to={`${url}/invites`}>Events You're Invited To</Link>
+          </li>
+        </ul>
 
-  render() {
-    let userBio = this.state.userBio;
+        <hr />
 
-    return (
-        <div>
-          <h1>{userBio.name}</h1>
-          <p>{userBio.email}</p>
-          <p>{userBio.phone}</p>
-        </div>        
-      );
-  }
+        <Switch>
+          <Route path={`${url}/hosted-events`} component={HostedEvents} />
+          <Route path={`${url}/invites`} component={Invites} />
+        </Switch>
+      </div>
+    </Router>
+  );
 }
-
-export default Profile;
