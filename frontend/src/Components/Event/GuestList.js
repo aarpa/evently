@@ -35,16 +35,17 @@ class GuestList extends React.Component {
     for (let invite of invites) {
       guestList.push(
         <div key={invite.user.user_id}>
-          <li>{invite.user.name}</li>
+          <p>{invite.user.name} | RSVP Status: {invite.rsvp}</p>
         </div>
       );
     }
 
-    if (guestList === []) {
-      return (<p>"No one is invited to this event yet."</p>)
+    if (guestList.length === 0) {
+      return (<p>No one is invited to this event yet!</p>)
     } else {
       return (
         <div>
+          <h2>Invited Guests</h2>
           {guestList}
         </div>        
       );

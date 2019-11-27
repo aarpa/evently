@@ -32,16 +32,19 @@ class HostedEvents extends React.Component {
 
     for (let event of hostedEvents) {
       let redirectUrl = `/events/${event.event_id}`;
+      console.log(redirectUrl)
+
 
       eventsList.push(
         <div key={event.event_id}>
           <Link to={redirectUrl}>{event.title}</Link>
         </div>
       );
+
     }
 
-    if (eventsList === []) {
-      return (<p>"No upcoming events hosted by you."</p>)
+    if (eventsList.length === 0) {
+      return (<p>No upcoming events hosted by you.</p>)
     } else {
       return (
         <div>

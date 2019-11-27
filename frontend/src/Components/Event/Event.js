@@ -11,33 +11,43 @@ import {
   Switch,
   Route,
   Link,
-  useRouteMatch
+  useRouteMatch,
+  useParams
 } from "react-router-dom";
 import EventDetails from './EventDetails';
 import GuestList from './GuestList';
+import UserList from '../UserList/UserList'
 
 
 export default function Event() {
+  console.log(useRouteMatch())
   let { url } = useRouteMatch();
+  let { eventId } = useParams();
+
   return (
-    <Router>
-      <div>
-        <Route path="/events/:eventId" component={EventDetails} />
+    <div>
+      <EventDetails eventId={eventId} />
 
-        <ul>
-          <li>
-            <Link to={`${url}/invite-guests`}>Invite Guests</Link>
-          </li>
-        </ul>
+      <ul>
+        <li>
+          <Link to={`${url}/view-guests`}>View Invited Guests</Link>
+        </li>
+        <li>
+          <Link to={`${url}/invite-guests`}>Invite New Guests</Link>
+        </li>
+      </ul>
 
-        <hr />
+      <hr />
 
-        <Switch>
-          <Route path={`${url}/invite-guests`}>
-            <GuestList url={url} />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+      <Switch>
+        <Route path={`${url}/view-guests`}>
+          <GuestList url={url} />
+        </Route>
+        <Route path={`${url}/invite-guests`}>
+          <UserList />
+        </Route>
+      </Switch>
+    </div>
+    
   );
 }

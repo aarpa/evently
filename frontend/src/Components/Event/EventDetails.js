@@ -19,8 +19,9 @@ class EventDetails extends React.Component {
   }
 
   componentDidMount() {
-    let eventId = this.props.match.params.eventId;
+    let eventId = this.props.eventId;
     let apiUrl = `/events/${eventId}`
+    
     $.get(apiUrl, response => this.setState({eventDetails: response}))
   }
 

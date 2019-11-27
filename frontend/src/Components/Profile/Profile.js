@@ -21,7 +21,6 @@ import Invites from './Invites';
 export default function Profile() {
   let { url } = useRouteMatch();
   return (
-    <Router>
       <div>
         <Route path="/users/:userId" component={Bio} />
 
@@ -41,6 +40,5 @@ export default function Profile() {
           <Route path={`${url}/invites`} component={Invites} />
         </Switch>
       </div>
-    </Router>
   );
 }
