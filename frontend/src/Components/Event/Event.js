@@ -14,7 +14,7 @@ import {
   useRouteMatch
 } from "react-router-dom";
 import EventDetails from './EventDetails';
-import UserList from '../UserList/UserList';
+import GuestList from './GuestList';
 
 
 export default function Event() {
@@ -26,14 +26,16 @@ export default function Event() {
 
         <ul>
           <li>
-            <Link to={`${url}/invites`}>Invite Guests</Link>
+            <Link to={`${url}/invite-guests`}>Invite Guests</Link>
           </li>
         </ul>
 
         <hr />
 
         <Switch>
-          <Route path={`${url}/invites`} component={UserList} />
+          <Route path={`${url}/invite-guests`}>
+            <GuestList url={url} />
+          </Route>
         </Switch>
       </div>
     </Router>
