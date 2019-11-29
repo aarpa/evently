@@ -10,7 +10,8 @@ import {
   // useRouteMatch
 } from "react-router-dom";
 // import $ from "jquery";
-import Credentials from '../Credentials/Credentials';
+import Home from '../Home/Home';
+import Login from '../Home/Login';
 import UserList from '../UserList/UserList';
 import Profile from '../Profile/Profile';
 import EventForm from '../EventForm/EventForm';
@@ -36,15 +37,10 @@ export default function App() {
         <hr />
 
         <Switch>
-          <Route exact path="/">
-            <Credentials />
-          </Route>
-          <Route exact path="/users">
-            <UserList />
-          </Route>
-          <Route path="/create-event">
-            <EventForm />
-          </Route>
+          <Route exact path="/" component={Home} />
+          <Route path='/login' component={Login} />
+          <Route exact path="/users" component={UserList} />
+          <Route path="/create-event" component={EventForm} />
           <Route path="/events/:eventId" component={Event} />
           <Route path="/users/:userId" component={Profile} />
         </Switch>

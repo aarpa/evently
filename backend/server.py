@@ -20,16 +20,15 @@ def login():
 
     email = request.form.get('email')
     password = request.form.get('password')
-    print(email, password)
 
     user = User.query.filter(User.email == email, User.password == password).first()
     
     if user != None:
         session['user_id'] = user.user_id
-        return redirect('/users/' + str(user.user_id))
+        return jsonify(user.user_id)
     else:
         # flash("Invalid login. Please try again.")
-        return jsonify("Invalid login. Please try again.")
+        abort(404)
 
 # ------------------------------------------------------------------- #
 
@@ -173,7 +172,7 @@ def get_event(event_id):
     """Return a specific event in JSON format."""
 
     event = Event.query.get(event_id)
-    print("\n\n\n\n", event)
+    # if session['user_id'] == event.host:
 
     if event:
         return as_dict(event)
@@ -201,6 +200,7 @@ def create_event():
     req_body['start_on'] = datetime.strptime(req_body['start_on'], datetime_format)
     req_body['end_on'] = datetime.strptime(req_body['end_on'], datetime_format)
     req_body['created_on'] = datetime.now()
+    req_body['host'] = session['user_id']
 
 
     # Note: ** is used to "spread" an object into keyword arguments, where (key=argument name), and (value=argument value)
