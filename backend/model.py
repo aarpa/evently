@@ -40,7 +40,7 @@ class User(db.Model):
 
     is_registered = db.Column(db.Boolean,
                               nullable=False,
-                              default=False)
+                              default=True)
     
 
     # ONE user to MANY events

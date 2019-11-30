@@ -12,6 +12,7 @@ import {
 // import $ from "jquery";
 import Home from '../Home/Home';
 import Login from '../Home/Login';
+import Signup from '../Home/Signup';
 import UserList from '../UserList/UserList';
 import Profile from '../Profile/Profile';
 import EventForm from '../EventForm/EventForm';
@@ -39,6 +40,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path='/login' component={Login} />
+          <Route path='/signup' component={Signup} />
           <Route exact path="/users" component={UserList} />
           <Route path="/create-event" component={EventForm} />
           <Route path="/events/:eventId" component={Event} />

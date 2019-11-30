@@ -32,9 +32,12 @@ class UserList extends React.Component {
     }
 
     return (
-      <ul>
-        {userListItems}
-      </ul>
+      <div>
+        <h2>Full List of Users</h2>
+        <ul>
+          {userListItems}
+        </ul>
+      </div>
     );
   }
 }

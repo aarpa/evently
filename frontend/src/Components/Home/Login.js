@@ -1,0 +1,73 @@
+/* 
+Parent component: Credentials
+Objective: To render form for user to log in --> once logged in, redirects that user's page
+Browser URL: /login
+Backend API: /login
+*/
+
+import React from "react";
+import $ from "jquery";
+import { Redirect } from "react-router-dom";
+import { setLoggedInUser } from '../../util/loginInfo'
+
+
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: ''
+    };
+  }
+
+  handleChange = (event) => {
+    let newState = {}
+
+    let name = event.target.name;
+    let value = event.target.value; 
+    
+    newState[name] = value
+
+    this.setState(newState);
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    
+    $.post('/login', this.state, (response) => {
+
+      // Call the helper function to save the user in loginInfo module
+      setLoggedInUser(response)
+      this.setState({userId: response})
+    });
+  }
+
+
+  render() {
+    if (this.state.userId) {
+      let redirectUrl = `/users/${this.state.userId}`
+      return <Redirect to={redirectUrl} />
+    }
+
+    return (
+      <div>
+        <h1>Sign in to Evently!</h1>
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <p>Email</p>
+            <input name="email" type="text" value={this.state.email} onChange={this.handleChange} />
+          </div>
+          <div>
+            <p>Password</p>
+            <input name="password" type="password" value={this.state.password} onChange={this.handleChange} />
+          </div>
+          <div>
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
+
+export default Login;

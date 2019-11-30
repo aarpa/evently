@@ -24,10 +24,8 @@ def login():
     user = User.query.filter(User.email == email, User.password == password).first()
     
     if user != None:
-        session['user_id'] = user.user_id
         return jsonify(user.user_id)
     else:
-        # flash("Invalid login. Please try again.")
         abort(404)
 
 # ------------------------------------------------------------------- #
@@ -65,8 +63,14 @@ def create_user():
     """Add a new user into database."""
     
     # POST reqs have a body, so extract out the parsed JSON data
-    # Don't use HTML form requests --> request.form.args()
-    req_body = request.get_json()
+    # req_body = request.get_json()
+    req_body = {
+        'name': request.form.get('name'),
+        'phone': request.form.get('phone'),
+        'dob': request.form.get('dob'),
+        'email': request.form.get('email'),
+        'password': request.form.get('password')
+    }
 
     # Note: ** is used to "spread" an object into keyword arguments, where (key=argument name), and (value=argument value)
     user = User(**req_body)
@@ -74,7 +78,11 @@ def create_user():
     db.session.add(user)
     db.session.commit()
 
-    return {}
+    # Need to refresh db.session to obtain the newly created event instance
+    # Useful for extracting out the event id to redirect to another API
+    db.session.refresh(user)
+
+    return jsonify(user.user_id)
 
 # ------------------------------------------------------------------- #
 
