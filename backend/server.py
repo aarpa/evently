@@ -41,7 +41,7 @@ def get_all_users():
     for user in users:
         users_list.append(as_dict(user))
 
-    return jsonify(users_list)
+    return {'users': users_list}
 
 # ------------------------------------------------------------------- #
 
@@ -278,7 +278,32 @@ def get_event_invites(event_id):
 
         invites_list.append(invite_dict)
 
-    return jsonify(invites_list)
+    return {'users': invites_list}
+
+# ------------------------------------------------------------------- #
+
+@app.route('/events/<int:event_id>/to_invite')
+def get_users_to_invite(event_id):
+    """Return list of users are are NOT invited to an event in a JSON format."""
+
+    # get list of all users
+    # get set of users invited to this event
+    # iterate over all users to check for inclusion in invited users list
+
+    all_users = get_all_users()['users']
+    invited_users = get_event_invites(event_id)['users']   
+    
+    # Lambda func = one-time use func to extract out id from userObj
+    # map() = alternate way to transform each element in a for-loop iteration
+    invited_user_ids = set(map(lambda userObj: userObj['user_id'], invited_users))
+
+    guests_to_invite = []
+
+    for userObj in all_users:
+        if userObj['user_id'] not in invited_user_ids:
+            guests_to_invite.append(userObj)
+
+    return {'users': guests_to_invite}
 
 # ------------------------------------------------------------------- #
 
