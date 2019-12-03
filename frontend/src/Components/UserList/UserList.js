@@ -17,7 +17,7 @@ class UserList extends React.Component {
   }
 
   componentDidMount() {
-    $.get('/users', response => this.setState({ users: response }));
+    $.get('/users', response => this.setState({ users: response.users }));
   }
 
   render() {
