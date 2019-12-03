@@ -35,6 +35,27 @@ class UserSelection extends React.Component {
     this.setState({ checkedUsers: checkedUsers })
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    const url = `/events/${this.props.eventId}/invites`;
+
+    const reqBody = {userIds: Array.from(this.state.checkedUsers)}
+    const reqBodyJson = JSON.stringify(reqBody)
+
+    // $.post(`/events/${this.props.eventId}/invites`, reqBodyJson, () => {})
+    // jQuery wasn't working --> couldn't get request payload to be a JSON object -- need to look more into why
+
+    // this is an alternate way to make POST request
+    fetch(url, {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: reqBodyJson // body data type must match "Content-Type" header
+    });
+  }
+
   render() {
     let users = this.state.users;
 
@@ -56,7 +77,7 @@ class UserSelection extends React.Component {
     }
 
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         {usersToRender}
         <input type="submit" value="Submit"></input>
       </form>
