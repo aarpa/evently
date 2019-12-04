@@ -1,8 +1,8 @@
 /* 
 Parent component: Event
 Objective: To render a list of users who are invited to an event
-Browser URL: /user/:userId/hosted-events
-Backend API: /user/<user_id>/hosted-events
+Browser URL: /events/:eventId/view-guests
+Backend API: /events/<event_id>/invites
 */
 
 import React from 'react';
@@ -21,9 +21,8 @@ class GuestList extends React.Component {
 
   componentDidMount() {
     let apiUrl = `/events/${this.props.eventId}/invites`;
-    // let apiUrl = `/${path}/invites`
 
-    $.get(apiUrl, response => this.setState({ invites: response }));
+    $.get(apiUrl, response => this.setState({ invites: response.users }));
   }
 
 
@@ -31,11 +30,18 @@ class GuestList extends React.Component {
     let invites = this.state.invites;
 
     let guestList = [];
+    let rsvp_status = 'No response yet';
 
     for (let invite of invites) {
+
+      if (invite.rsvp !== null) {
+        rsvp_status = invite.rsvp
+      }
+
       guestList.push(
         <div key={invite.user.user_id}>
-          <p>{invite.user.name} | RSVP Status: {invite.rsvp}</p>
+          <p>{invite.user.name}</p>
+          <p>RSVP Status: {rsvp_status}</p>
         </div>
       );
     }

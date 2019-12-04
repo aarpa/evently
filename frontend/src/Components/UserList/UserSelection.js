@@ -1,7 +1,7 @@
 /* 
-Parent component: 
+Parent component: Event
 Objective: To render a list of users to select with checkboxes
-Browser URL: 
+Browser URL: /events/:eventId/invite-guests
 Backend API: /events/<event_id>/to_invite
 */
 
@@ -23,15 +23,17 @@ class UserSelection extends React.Component {
   }
 
   handleChange = (event) => {
-    const userId = parseInt(event.target.id);
+    const userId = parseInt(event.target.id);   // convert from str to int
     const checkedUsers = this.state.checkedUsers;
 
+    // use Set methods to add or remove user depending on if checked or not
     if (checkedUsers.has(userId)) {
       checkedUsers.delete(userId)
     } else {
       checkedUsers.add(userId)
     }
 
+    // set state with final array of users whose boxes are checked
     this.setState({ checkedUsers: checkedUsers })
   }
 
@@ -53,10 +55,16 @@ class UserSelection extends React.Component {
         'Content-Type': 'application/json'
       },
       body: reqBodyJson // body data type must match "Content-Type" header
+    }).then(response => {
+      this.setState({ success: true })
     });
   }
 
   render() {
+    if (this.state.success) {
+      return (<p>New invitations were successfully sent!</p>) 
+    }
+
     let users = this.state.users;
 
     let usersToRender = [];
