@@ -308,17 +308,28 @@ def get_users_to_invite(event_id):
 # ------------------------------------------------------------------- #
 
 @app.route('/events/<int:event_id>/invites', methods=['POST'])
-def create_invite():
+def create_invite(event_id):
     """Add a new invite for an event into database."""
     
-    req_body = request.get_json()
+    json_req_body = request.get_json()
 
-    invite = Invitation(**req_body)
+    # print(req_body)
 
-    db.session.add(invite)
+    user_ids = json_req_body['userIds']
+
+    # print(user_ids)
+
+    for user_id in user_ids:
+        req_body = {
+            'user_id': user_id,
+            'event_id': event_id
+        }
+        invite = Invitation(**req_body)
+        db.session.add(invite)
+    
     db.session.commit()
 
-    return as_dict(invite)
+    return jsonify(event_id)
 
 # ------------------------------------------------------------------- #
 
