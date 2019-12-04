@@ -7,7 +7,6 @@ Backend API: /events/<event_id>
 
 import React from "react";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Link
@@ -15,7 +14,7 @@ import {
 import { getLoggedInUser } from '../../util/loginInfo'
 import EventDetails from './EventDetails';
 import GuestList from './GuestList';
-import UserList from '../UserList/UserList';
+import UserSelection from '../UserList/UserSelection';
 import $ from "jquery";
 
 
@@ -46,6 +45,8 @@ class Event extends React.Component {
 
   render() {
     let url = this.props.match.url;
+    let eventId = this.props.match.params.eventId;
+
     return (
       <div>
         <EventDetails eventDetails={this.state.eventDetails} />
@@ -59,10 +60,10 @@ class Event extends React.Component {
 
         <Switch>
           <Route path={`${url}/view-guests`}>
-            <GuestList url={url} />
+            <GuestList eventId={eventId} />
           </Route>
           <Route path={`${url}/invite-guests`}>
-            <UserList />
+            <UserSelection eventId={eventId} />
           </Route>
         </Switch>
       </div>

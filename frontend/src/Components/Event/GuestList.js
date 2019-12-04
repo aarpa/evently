@@ -20,7 +20,7 @@ class GuestList extends React.Component {
 
 
   componentDidMount() {
-    let apiUrl = `${this.props.url}/invites`;
+    let apiUrl = `/events/${this.props.eventId}/invites`;
     // let apiUrl = `/${path}/invites`
 
     $.get(apiUrl, response => this.setState({ invites: response }));
