@@ -10,6 +10,7 @@ import {
   // useRouteMatch
 } from "react-router-dom";
 // import $ from "jquery";
+import './App.css'
 import Home from '../Home/Home';
 import Login from '../Home/Login';
 import Signup from '../Home/Signup';
@@ -23,20 +24,18 @@ export default function App() {
   return (
     <Router>
       <div>
-        <ul>
+        <ul className="navbar">
           <li>
-            <Link to="/">Home</Link>
+            <Link className="menu-item" to="/">Home</Link>
           </li>
           <li>
-            <Link to="/users">Users</Link>
+            <Link className="menu-item" to="/users">Users</Link>
           </li>
           <li>
-            <Link to="/create-event">Create a New Event</Link>
+            <Link className="menu-item" to="/create-event">Create a New Event</Link>
           </li>
         </ul>
-
-        <hr />
-
+        
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path='/login' component={Login} />
