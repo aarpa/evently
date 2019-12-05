@@ -17,7 +17,7 @@ html {
   justify-content: space-evenly;
   padding: 1.5rem;
   font-size: 1.5rem;
-  background-color: #f7e7ce;
+  background-color: rgba(247, 231, 206, 0.3);
 }
 
 .navbar .menu-item {
@@ -25,4 +25,14 @@ html {
   padding: 0.5rem;
   color: #90262e;
   cursor: pointer;
+}
+
+.main-title {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-size: 3rem;
+  font-style: italic;
+  font-family: cursive;
+  color: #90262e;
 }

@@ -7,16 +7,13 @@ import {
   Route,
   Link,
   useParams,
-  // useRouteMatch
 } from "react-router-dom";
-// import $ from "jquery";
 import './App.css'
-import Home from '../Home/Home';
+// import Home from '../Home/Home';
 import Login from '../Home/Login';
 import Signup from '../Home/Signup';
 import UserList from '../UserList/UserList';
 import Profile from '../Profile/Profile';
-import EventForm from '../EventForm/EventForm';
 import Event from '../Event/Event';
 
 
@@ -26,26 +23,32 @@ export default function App() {
       <div>
         <ul className="navbar">
           <li>
-            <Link className="menu-item" to="/">Home</Link>
+            <Link className="menu-item" to="/">Evently</Link>
           </li>
           <li>
-            <Link className="menu-item" to="/users">Users</Link>
+            <Link className="menu-item" to="/login">Login</Link>
           </li>
           <li>
-            <Link className="menu-item" to="/create-event">Create a New Event</Link>
+            <Link className="menu-item" to='/signup'>Sign Up</Link>
           </li>
         </ul>
-        
+
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Homepage} />
           <Route path='/login' component={Login} />
           <Route path='/signup' component={Signup} />
-          <Route exact path="/users" component={UserList} />
-          <Route path="/create-event" component={EventForm} />
           <Route path="/events/:eventId" component={Event} />
-          <Route path="/users/:userId" component={Profile} />
+          <Route exact path="/users/:userId" component={Profile} />
         </Switch>
       </div>
     </Router>
+  );
+}
+
+function Homepage() {
+  return (
+    <h1 className="main-title">
+      Welcome to Evently!
+    </h1>
   );
 }
