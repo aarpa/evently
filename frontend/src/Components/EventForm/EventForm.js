@@ -49,22 +49,22 @@ class EventForm extends React.Component {
     }
 
     return (
-      <div>
-        <h1>Create a New Event!</h1>
+      <div className="event-form">
+        <h1 className="form-title">Create a New Event!</h1>
         <form onSubmit={this.handleSubmit}>
-          <div>
+          <div className="form-field">
             <p>Title</p>
             <input name="title" type="text" value={this.state.title} onChange={this.handleChange} />
           </div>
-          <div>
+          <div className="form-field">
             <p>Start</p>
             <input name="startTime" type="datetime-local" value={this.state.startTime} onChange={this.handleChange} />
           </div>
-          <div>
+          <div className="form-field">
             <p>End</p>
             <input name="endTime" type="datetime-local" value={this.state.endTime} onChange={this.handleChange} />
           </div>
-          <div>
+          <div className="form-field submit-button">
             <input type="submit" value="Submit" />
           </div>
         </form>

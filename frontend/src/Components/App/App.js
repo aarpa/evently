@@ -21,8 +21,8 @@ export default function App() {
     <Router>
       <div className="app">
         <div className="navbar">
-          <Link className="menu-item brand" to="/">Evently</Link>
-          <Link className="menu-item" to="/login">Login</Link>
+          <Link className="home" to="/">Evently</Link>
+          <Link className="menu-item" to="/login">Log in</Link>
           <Link className="menu-item" to='/signup'>Sign Up</Link>
           <Link className="menu-item" to="/create-event">Create a New Event</Link>
         </div>

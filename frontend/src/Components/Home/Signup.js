@@ -54,7 +54,7 @@ class Signup extends React.Component {
 
     return (
       <div className="signup-form">
-        <h1 className="form-title">Join Evently!</h1>
+        <h1 className="form-title">Create an account</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-field">
             <p>Name</p>
@@ -76,7 +76,7 @@ class Signup extends React.Component {
             <p>Password</p>
             <input name="password" type="password" value={this.state.password} onChange={this.handleChange} />
           </div>
-          <div className="form-field">
+          <div className="form-field  submit-button">
             <input type="submit" value="Submit" />
           </div>
         </form>

@@ -51,7 +51,7 @@ class Login extends React.Component {
 
     return (
       <div className="login-form">
-        <h1 className="form-title">Sign in to Evently!</h1>
+        <h1 className="form-title">Log in to your account</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-field">
             <p>Email</p>
@@ -61,7 +61,7 @@ class Login extends React.Component {
             <p>Password</p>
             <input name="password" type="password" value={this.state.password} onChange={this.handleChange} />
           </div>
-          <div className="form-field">
+          <div className="form-field submit-button">
             <input type="submit" value="Submit" />
           </div>
         </form>
