@@ -31,6 +31,9 @@ export default function Profile() {
           <li>
             <Link to={`${url}/invites`}>Events You're Invited To</Link>
           </li>
+          <li>
+            <Link to="/create-event">Create a New Event</Link>
+          </li>
         </ul>
 
         <hr />

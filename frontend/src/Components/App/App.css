@@ -8,6 +8,12 @@ html {
   background-repeat: no-repeat;
   font-family: 'Work Sans', sans-serif;
   font-weight: 500;
+  position: relative;
+  color: #90262e;
+}
+
+body {
+  height: 100%;
 }
 
 
@@ -25,14 +31,49 @@ html {
   padding: 0.5rem;
   color: #90262e;
   cursor: pointer;
+  border-radius: 1rem;
 }
 
-.main-title {
+.navbar .brand {
+  flex-grow: 1;
+  font-size: 2rem;
+  font-style: italic;
+  font-family: cursive;
+}
+
+.landing {
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
+  margin: 25% auto;
   font-size: 3rem;
   font-style: italic;
   font-family: cursive;
-  color: #90262e;
+}
+
+
+/*Styles for login and signup forms*/
+.login-form,
+.signup-form {
+  margin: 10rem;
+  background-color: rgba(247, 231, 206, 0.3);
+  width: 20rem;
+  padding: 1.5rem;
+  line-height: 1.5rem;
+  border-radius: 1rem;
+}
+
+.form-title {
+  font-size: 1.5rem;
+}
+
+.form-field {
+  padding: 1rem 0;
+}
+
+
+.menu-item:hover {
+  background-color: rgba(209, 82, 46, 0.7);
+  color: beige;
+  transition: background-color 0.25s linear;
 }

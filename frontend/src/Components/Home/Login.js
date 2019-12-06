@@ -50,18 +50,18 @@ class Login extends React.Component {
     }
 
     return (
-      <div>
-        <h1>Sign in to Evently!</h1>
+      <div className="login-form">
+        <h1 className="form-title">Sign in to Evently!</h1>
         <form onSubmit={this.handleSubmit}>
-          <div>
+          <div className="form-field">
             <p>Email</p>
             <input name="email" type="text" value={this.state.email} onChange={this.handleChange} />
           </div>
-          <div>
+          <div className="form-field">
             <p>Password</p>
             <input name="password" type="password" value={this.state.password} onChange={this.handleChange} />
           </div>
-          <div>
+          <div className="form-field">
             <input type="submit" value="Submit" />
           </div>
         </form>

@@ -53,30 +53,30 @@ class Signup extends React.Component {
     }
 
     return (
-      <div>
-        <h1>Join Evently!</h1>
+      <div className="signup-form">
+        <h1 className="form-title">Join Evently!</h1>
         <form onSubmit={this.handleSubmit}>
-          <div>
+          <div className="form-field">
             <p>Name</p>
             <input name="name" type="text" value={this.state.name} onChange={this.handleChange} />
           </div>
-          <div>
+          <div className="form-field">
             <p>Phone Number</p>
             <input name="phone" type="tel" value={this.state.phone} onChange={this.handleChange} />
           </div>
-          <div>
+          <div className="form-field">
             <p>Date of Birth</p>
             <input name="dob" type="text" value={this.state.dob} onChange={this.handleChange} />
           </div>
-          <div>
+          <div className="form-field">
             <p>Email</p>
             <input name="email" type="text" value={this.state.email} onChange={this.handleChange} />
           </div>
-          <div>
+          <div className="form-field">
             <p>Password</p>
             <input name="password" type="password" value={this.state.password} onChange={this.handleChange} />
           </div>
-          <div>
+          <div className="form-field">
             <input type="submit" value="Submit" />
           </div>
         </form>

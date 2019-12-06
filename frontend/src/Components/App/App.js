@@ -6,39 +6,34 @@ import {
   Switch,
   Route,
   Link,
-  useParams,
 } from "react-router-dom";
 import './App.css'
 // import Home from '../Home/Home';
 import Login from '../Home/Login';
 import Signup from '../Home/Signup';
-import UserList from '../UserList/UserList';
 import Profile from '../Profile/Profile';
 import Event from '../Event/Event';
+import EventForm from '../EventForm/EventForm';
 
 
 export default function App() {
   return (
     <Router>
-      <div>
-        <ul className="navbar">
-          <li>
-            <Link className="menu-item" to="/">Evently</Link>
-          </li>
-          <li>
-            <Link className="menu-item" to="/login">Login</Link>
-          </li>
-          <li>
-            <Link className="menu-item" to='/signup'>Sign Up</Link>
-          </li>
-        </ul>
+      <div className="app">
+        <div className="navbar">
+          <Link className="menu-item brand" to="/">Evently</Link>
+          <Link className="menu-item" to="/login">Login</Link>
+          <Link className="menu-item" to='/signup'>Sign Up</Link>
+          <Link className="menu-item" to="/create-event">Create a New Event</Link>
+        </div>
 
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path='/login' component={Login} />
           <Route path='/signup' component={Signup} />
+          <Route path="/users/:userId" component={Profile} />
+          <Route path="/create-event" component={EventForm} />
           <Route path="/events/:eventId" component={Event} />
-          <Route exact path="/users/:userId" component={Profile} />
         </Switch>
       </div>
     </Router>
@@ -47,8 +42,8 @@ export default function App() {
 
 function Homepage() {
   return (
-    <h1 className="main-title">
-      Welcome to Evently!
-    </h1>
+    <div className="landing">
+      <h1>Welcome to Evently!</h1>
+    </div>
   );
 }
