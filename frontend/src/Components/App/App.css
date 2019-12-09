@@ -5,10 +5,14 @@ html {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Cookie', cursive;
   font-weight: 500;
   position: relative;
   color: #90262e;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .app {
@@ -21,14 +25,15 @@ html {
 /*Style for main app*/
 .navbar {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
-  font-size: 1.5rem;
+  padding: 1rem;
+  white-space: nowrap;
+  font-size: 2rem;
   background-color: rgba(247, 231, 206, 0.3);
 }
 
-.navbar .menu-item {
+ .menu-items a {
   text-decoration: none;
   padding: 0.5rem 1rem;
   color: #90262e;
@@ -36,11 +41,10 @@ html {
   border-radius: 1rem;
 }
 
-.navbar .home {
+.home a {
   flex-grow: 1;
-  font-size: 2rem;
+  font-size: 3rem;
   font-style: italic;
-  font-family: cursive;
   padding: 0.5rem;
   color: #90262e;
   cursor: pointer;
@@ -51,17 +55,20 @@ html {
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
-  font-size: 3rem;
+  font-size: 6rem;
   font-style: italic;
-  font-family: cursive;
+}
+
+.landing h1 {
+  margin-top: 20%;
 }
 
 
 /*Styles for forms*/
 .login-form,
 .signup-form,
-.event-form {
+.event-form,
+.bio {
   margin: 3rem;
   background-color: rgba(247, 231, 206, 0.3);
   width: 20rem;
@@ -71,11 +78,16 @@ html {
 }
 
 .form-title {
-  font-size: 1.5rem;
+  font-size: 2rem;
+
 }
 
 .form-field {
-  padding: 0.5rem 0;
+  margin: 1.5rem 0 1rem 0;
+}
+
+.form-field p {
+  font-size: 1.5rem;
 }
 
 input[type="submit"] {
@@ -83,7 +95,8 @@ input[type="submit"] {
   background-color: rgba(247, 231, 206, 0.3);
   width: 25%;
   padding: 1rem 0;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  font-family: inherit;
   text-align: center;
   cursor: pointer;
   border-radius: 1rem;
@@ -91,10 +104,54 @@ input[type="submit"] {
 }
 
 
-.menu-item:hover,
+.menu-items a:hover,
 input[type="submit"]:hover {
-  background-color: #d1734380;
+  background-color: rgba(239, 219, 189, 0.5);
   color: #90262e;
   font-weight: bold;
   transition: background-color 0.25s linear;
+}
+
+
+/*Styles for user profiles*/
+.profile {
+  font-family: Raleway, sans-serif;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.bio {
+  margin: 1rem 0;
+}
+
+.bio h1 {
+  font-size: 1.5rem;
+}
+
+.bio p {
+  font-size: 1rem;
+
+}
+
+hr {
+  border-style: double;
+  border-width: 0.75px;
+}
+
+.events,
+.events a {
+  padding: 1rem;
+  color: black;
+}
+
+
+/*Styles for mobile screens*/
+@media only screen and (max-width: 550px) {
+  .navbar {
+    display: block;
+  }
+
+  .menu-items a {
+    display: block;
+  }
 }

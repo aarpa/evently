@@ -8,7 +8,6 @@ import {
   Link,
 } from "react-router-dom";
 import './App.css'
-// import Home from '../Home/Home';
 import Login from '../Home/Login';
 import Signup from '../Home/Signup';
 import Profile from '../Profile/Profile';
@@ -21,10 +20,14 @@ export default function App() {
     <Router>
       <div className="app">
         <div className="navbar">
-          <Link className="home" to="/">Evently</Link>
-          <Link className="menu-item" to="/login">Log in</Link>
-          <Link className="menu-item" to='/signup'>Sign Up</Link>
-          <Link className="menu-item" to="/create-event">Create a New Event</Link>
+          <div className="home" >
+            <Link to="/">Evently</Link>
+          </div>
+          <div className="menu-items">
+            <Link to="/login">Log in</Link>
+            <Link to='/signup'>Sign Up</Link>
+            <Link to="/create-event">Create a New Event</Link>
+          </div>
         </div>
 
         <Switch>
