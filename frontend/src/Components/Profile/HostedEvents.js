@@ -47,7 +47,7 @@ class HostedEvents extends React.Component {
       return (<p>No upcoming events hosted by you.</p>)
     } else {
       return (
-        <div>
+        <div className="hosted-events">
           {eventsList}
         </div>        
       );

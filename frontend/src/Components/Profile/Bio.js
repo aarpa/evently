@@ -28,7 +28,7 @@ class Bio extends React.Component {
     let userBio = this.state.userBio;
 
     return (
-        <div>
+        <div className="bio">
           <h1>{userBio.name}</h1>
           <p>{userBio.email}</p>
           <p>{userBio.phone}</p>

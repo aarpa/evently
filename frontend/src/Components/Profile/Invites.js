@@ -45,7 +45,7 @@ class Invites extends React.Component {
       return (<p>"No upcoming invites."</p>)
     } else {
       return (
-        <div>
+        <div className="invites">
           {eventsList}
         </div>        
       );
