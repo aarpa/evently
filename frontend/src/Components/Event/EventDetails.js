@@ -14,10 +14,10 @@ export default function EventDetails(propsObj) {
   // const {eventDetails} = propsObj; --> destructuring
 
   return (
-    <div>
+    <div className="event-details">
       <h1>{eventDetails.title}</h1>
-      <p>Start Time and Date: {eventDetails.start_on}</p>
-      <p>End Time and Date: {eventDetails.end_on}</p>
+      <p>Start: {eventDetails.start_on}</p>
+      <p>End: {eventDetails.end_on}</p>
     </div>
   );
 }

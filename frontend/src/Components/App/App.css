@@ -68,7 +68,8 @@ html {
 .login-form,
 .signup-form,
 .event-form,
-.bio {
+.bio,
+.event-details {
   margin: 3rem;
   background-color: rgba(247, 231, 206, 0.3);
   width: 20rem;
@@ -113,22 +114,30 @@ input[type="submit"]:hover {
 }
 
 
-/*Styles for user profiles*/
-.profile {
+/*Styles for user profiles and events*/
+.profile,
+.event {
   font-family: Raleway, sans-serif;
   font-weight: bold;
   line-height: 1.5;
 }
 
-.bio {
+.event-details {
+  width: 25rem;
+}
+
+.bio,
+.event-details {
   margin: 1rem 0;
 }
 
-.bio h1 {
+.bio h1,
+.event-details h1 {
   font-size: 1.5rem;
 }
 
-.bio p {
+.bio p,
+.event-details p {
   font-size: 1rem;
 
 }
@@ -138,8 +147,10 @@ hr {
   border-width: 0.75px;
 }
 
-.events,
-.events a {
+.user-events,
+.user-events a,
+.event-guests,
+.event-guests a {
   padding: 1rem;
   color: black;
 }

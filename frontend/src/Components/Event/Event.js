@@ -48,13 +48,13 @@ class Event extends React.Component {
     let eventId = this.props.match.params.eventId;
 
     return (
-      <div>
+      <div className="event">
         <EventDetails eventDetails={this.state.eventDetails} />
 
-        <ul>
-          <li><Link to={`${url}/view-guests`}>View Invited Guests</Link></li>
+        <div className="event-guests">
+          <Link to={`${url}/view-guests`}>View Invited Guests</Link>
           {this.renderInviteLink(url)}
-        </ul>
+        </div>
 
         <hr />
 
