@@ -145,6 +145,28 @@ hr {
 }
 
 
+/*Styles for user's events*/
+.hosted-events,
+.invites {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hosted-events div,
+.invites div {
+  background-color: rgba(247, 231, 206, 0.3);
+  width: max-content;
+  padding: 0.75rem;
+  margin: 1rem;
+  border-radius: 1rem;
+}
+
+.hosted-events a,
+.invites a {
+  color: #90262e;
+  text-decoration: none;
+}
+
 /*Styles for mobile screens*/
 @media only screen and (max-width: 550px) {
   .navbar {
