@@ -24,11 +24,22 @@ def login():
     user = User.query.filter(User.email == email, User.password == password).first()
     
     if user != None:
+        session['user_id'] = user.user_id
         return jsonify(user.user_id)
     else:
         abort(404)
 
 # ------------------------------------------------------------------- #
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    """Log out user from session."""
+
+    del session['user_id']
+
+    return {}
+# ------------------------------------------------------------------- #
+
 
 @app.route('/users')
 def get_all_users():
