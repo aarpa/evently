@@ -24,7 +24,7 @@ export default function Profile() {
       <div className="profile">
         <Route path="/users/:userId" component={Bio} />
 
-        <div className="events">
+        <div className="user-events">
           <Link to={`${url}/hosted-events`}>Events You're Hosting</Link>
           <Link to={`${url}/invites`}>Events You're Invited To</Link>
           <Link to="/create-event">Create a New Event</Link>

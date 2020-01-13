@@ -1,5 +1,5 @@
 /* 
-Parent component: Home
+Parent component: App
 Objective: To render form for user to create an account --> once created, redirects to that user's profile page
 Browser URL: /signup
 Backend API: /users --> POST method
@@ -8,7 +8,6 @@ Backend API: /users --> POST method
 import React from "react";
 import $ from "jquery";
 import { Redirect } from "react-router-dom";
-import { setLoggedInUser } from '../../util/loginInfo'
 
 
 class Signup extends React.Component {
@@ -39,16 +38,14 @@ class Signup extends React.Component {
     
     $.post('/users', this.state, (response) => {
 
-      // Call the helper function to save the user in loginInfo module
-      setLoggedInUser(response)
-      this.setState({userId: response})
+      this.props.onSignup(response)
     });
   }
 
 
   render() {
-    if (this.state.userId) {
-      let redirectUrl = `/users/${this.state.userId}`
+    if (this.props.user) {
+      let redirectUrl = `/users/${this.props.user}`
       return <Redirect to={redirectUrl} />
     }
 

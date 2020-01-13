@@ -79,7 +79,7 @@ class UserSelection extends React.Component {
       usersToRender.push(
         <div key={user.user_id}>
           <input id={user.user_id} type="checkbox" checked={isChecked} onChange={this.handleChange} />
-          <label htmlFor={user.user_id}>{user.name} {user.user_id}</label>
+          <label htmlFor={user.user_id}>{user.name}</label>
         </div>
       );
     }

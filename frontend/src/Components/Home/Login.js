@@ -8,7 +8,6 @@ Backend API: /login
 import React from "react";
 import $ from "jquery";
 import { Redirect } from "react-router-dom";
-import { setLoggedInUser } from '../../util/loginInfo'
 
 
 class Login extends React.Component {
@@ -35,17 +34,18 @@ class Login extends React.Component {
     event.preventDefault();
     
     $.post('/login', this.state, (response) => {
+      this.props.onLogin(response);
 
       // Call the helper function to save the user in loginInfo module
-      setLoggedInUser(response)
-      this.setState({userId: response})
+      // setLoggedInUser(response);
+      // this.setState({user: response});
     });
   }
 
 
   render() {
-    if (this.state.userId) {
-      let redirectUrl = `/users/${this.state.userId}`
+    if (this.props.user) {
+      let redirectUrl = `/users/${this.props.user}`
       return <Redirect to={redirectUrl} />
     }
 

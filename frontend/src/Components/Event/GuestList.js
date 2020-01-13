@@ -41,7 +41,6 @@ class GuestList extends React.Component {
       guestList.push(
         <div key={invite.user.user_id}>
           <p>{invite.user.name}</p>
-          <p>RSVP Status: {rsvp_status}</p>
         </div>
       );
     }

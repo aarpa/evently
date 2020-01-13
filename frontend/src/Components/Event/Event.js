@@ -11,7 +11,6 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { getLoggedInUser } from '../../util/loginInfo'
 import EventDetails from './EventDetails';
 import GuestList from './GuestList';
 import UserSelection from '../UserList/UserSelection';
@@ -34,10 +33,10 @@ class Event extends React.Component {
 
   renderInviteLink = (url) => {
     // call helper function to extract out the user saved in the loginInfo module
-    const user = getLoggedInUser();
+    const user = this.props.user;
 
     if (user === this.state.eventDetails.host) {
-      return <li><Link to={`${url}/invite-guests`}>Invite New Guests</Link></li>;
+      return <Link to={`${url}/invite-guests`}>Invite New Guests</Link>;
     } else {
       return null;
     }

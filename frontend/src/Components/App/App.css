@@ -7,6 +7,7 @@ html {
   background-repeat: no-repeat;
   font-family: 'Cookie', cursive;
   font-weight: 500;
+  text-shadow: 1px 1px 5px beige;
   position: relative;
   color: #90262e;
 }
@@ -55,12 +56,13 @@ html {
   flex-grow: 1;
   display: flex;
   justify-content: center;
+  align-items: center;
   font-size: 6rem;
   font-style: italic;
 }
 
 .landing h1 {
-  margin-top: 20%;
+  /*margin-top: 20%;*/
 }
 
 
@@ -161,15 +163,15 @@ hr {
 .invites {
   display: flex;
   flex-wrap: wrap;
+  max-width: 80%;
 }
 
 .hosted-events div,
 .invites div {
-  background-color: rgba(247, 231, 206, 0.3);
-  width: max-content;
+  background-color: rgba(247, 231, 206, 0.75);
+  width: 45%;
   padding: 0.75rem;
-  margin: 1rem;
-  border-radius: 1rem;
+  margin: 2.5%;
 }
 
 .hosted-events a,
@@ -177,6 +179,7 @@ hr {
   color: #90262e;
   text-decoration: none;
 }
+
 
 /*Styles for mobile screens*/
 @media only screen and (max-width: 550px) {
