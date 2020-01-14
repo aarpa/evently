@@ -1,5 +1,9 @@
 ## About This App
-Evently is a single-page web app that is aimed at planning and managing small scale personal events on its own standalone platform. Users are directed to a landing page from which they can sign up to create an account or log in to their existing profile. Once logged in, users can create new events, view and navigate to events that they are hosting and/or events that they are invited to. Guests and hosts can both view the invitees to an event, but only hosts can invite new guests. While the backend web server is built with Flask using RESTful APIs, the frontend UI is created entirely with React. So users are able to navigate throughout the entire app without refreshing the web page although they can visualize the transitions with the changes in the browser URL.
+Evently is a single-page web app that is aimed at planning and managing small scale events. Inspired by Facebook Events and Eventbrite, this app has a similar functionality in this current implementation, but the vision is to allow users to have a standalone platform that is dedicated to creating and managing non-ticketed personal events. 
+
+This app required a database that could accommodate a complex data model with several many-to-many relationship between users and events. Since the backend web server is written in Python and built with Flask and the frontend is written in JavaScript using React, there needed to be a set of internal RESTful API endpoints that could handle and process the raw data passed over the web using JSON.
+
+UX was a high priority, so the ability to navigate across the UI without ever refreshing the whole page was achieved by utilizing React Router. That way, users can still visualize the transitions with the changes in the browser URL.
 
 ## Contents
 * [Tech Stack](#tech-stack)
@@ -21,10 +25,16 @@ Evently is a single-page web app that is aimed at planning and managing small sc
 ## <a name="features"></a>Features
 
 #### Landing Page
-Users register or login on the landing page.
+Users register or log in on the landing page.
 
 #### Profile Page
-Once signed in, users are directed to their profile page.
+Once signed in, users are directed to their profile page. This page has 2 segregated sections: the bio (which remains static) and the upcoming events (which can be toggled based on user interactions). The upcoming events includes those that the user is hosting and events that the user is invited to. Users can also create a new event from their profile page.
+
+#### Create New Event
+This page has a form that takes necessary information to create a new event. Upon saving, the user will be directed to the event page.
+
+#### Event Page
+This page has 2 segregated sections similar to the profile page: the event details (which remains static) and the guests invited to the event (which can be toggled based on user interactions). Any user can view the guestlist, but only the host can invite new guests to an event that they are hosting.
 
 ## <a name="future"></a>Upcoming Features
 The current data model is extremely robust and is able to support a wide range of features in future implementations. Some of them include:
